@@ -1,20 +1,14 @@
 import React from 'react';
 
 import Header from './components/header/header';
+import Freezer from './components/freezer/freezer';
 
 const App = () => {
   return (
-    <div className="App">
-      
+    <div className="app">
+      <Header />
       <main>
-          <section className='freezer__item'>
-          <div className='drawer'><i></i></div>
-          <div>신선칸</div>
-          <div className='add__food'>
-            <i className='plus'></i>
-          </div>
-          </section>
-        
+         <Freezer />
       </main>
     </div>
   );
