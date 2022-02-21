@@ -1,0 +1,46 @@
+
+.section{
+    height: 3.25rem;
+    background-color: antiquewhite;
+    box-shadow: 0px 3px 5px -2px grey;
+}
+
+.container{
+    height: 100%;
+    display:flex;
+    padding-left: .8rem;
+    border-bottom:1px solid black;
+    align-items:center;
+}
+.handle{
+    width: 30%;
+}
+.grab{
+    height: 1.2rem;
+    width: 7rem;
+    max-width: 90%;
+    border:1px solid black;
+    vertical-align: center;
+    align-self: center;
+    border-radius: .2rem;
+}
+.drawer_name{
+    width: 30%;
+    letter-spacing: .2rem;
+}
+.handle i{
+    display: block;
+    height: .2rem;
+    width: 50%;
+    margin:0.1em 0 0 .3rem;
+    border:1px solid black;
+    vertical-align: center;
+    align-self: center;
+    border-radius: .2rem;
+}
+.add_food{
+    width: 40%;
+    text-align: right;
+    margin-right: 0.5rem;
+    font-size: 1.5rem;
+}

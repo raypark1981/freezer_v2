@@ -1,6 +1,11 @@
 :root{
   --color-main-yellow: rgb(250, 191, 1);
   --color-main-text:#000000;
+
+  --font-size-big:2rem;
+  --font-size-regular: 1rem;
+  --font-size-small:.8rem;
+  --font-size-micro:.5rem;
 }
 
 *{box-sizing: border-box;margin:0;padding:0;}
