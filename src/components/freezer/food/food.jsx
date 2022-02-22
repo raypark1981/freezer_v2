@@ -4,7 +4,7 @@ import styles from './food.module.css';
 const Food = ({food}) => { 
     return (
         <li className={`${styles.food_container} ${food && food.master_code}`}
-            data-food-grp={food && food.food_grp}>
+            data-food-grp={food && food.foodgrp}>
             <div className={styles.outline}>
                 <div className={styles.food} >
                     <div className={styles.img} >
@@ -12,10 +12,10 @@ const Food = ({food}) => {
                     </div>
                     <div className={styles.info} >
                         <div>
-                            <h3 className={styles.name} >{food && food.food_name}</h3>
-                            <span className={styles.nutrition} >{food && food.nutrition}아연</span>
+                            <h3 className={styles.name} >{food && food.foodname}</h3>
+                            <span className={styles.nutrition} >{food && food.nutrition}</span>
                         </div>
-                        <p className={styles.memo} >{food && food.memo}rrr</p>
+                        <p className={styles.memo} >{food && food.memo}</p>
                         <div className={styles.btns} >
                             <button className={`${styles.btn} ${styles.recipe}`}><i></i></button>
                             <button className={`${styles.btn} ${styles.basket}`}><i></i></button>
