@@ -1,0 +1,46 @@
+{
+    "HpWnaQ2Vyyczzd2te5V5NrCUOUI3" : {
+        "userInfo" :  { "email" : "babopygam"}, 
+        "freezers": {
+            "freezerkey001" : { "key" : "freezerkey001" , "name": "울집냉장고" ,"mainyn": "Y"},
+            "freezerkey002" : { "key" : "freezerkey002" , "name": "가게냉장고" ,"mainyn": "N"}
+        }, 
+        "sections": {
+           "freezerkey001" : [
+            {
+                "key" : "sections001", "name"  : "신선칸"
+            },    {
+                "key" : "sections002", "name"  : "냉동칸"
+            }
+            ] ,
+           "freezerkey002" : [{ "key" : "sections-난수", "name"  : "신선칸"}] 
+        },
+        "foods": {
+            "sections001" : { 
+                "food001" : {
+                    "key" : "food001", "foodcd" : "100101000300000001", "foodcodename" : "과자", "foodname" : "쌀로별", "foodgrp" : "FM001",
+                    "expireddate" : "20231024", "fooddetail" : "","memo" : "존맛탱"
+                }, 
+                "food002" : {
+                    "key" : "food002", "foodcd" : "100101000300000001", "foodcodename" : "유제품", "foodname" : "우유", "foodgrp" : "FM002",
+                    "expireddate" : "20220201", "fooddetail" : "21일날 삼","memo" : "맛있는 우유"
+                }, 
+                "food003" : {
+                    "key" : "food003", "foodcd" : "100101000300000001", "foodcodename" : "콩", "foodname" : "두부", "foodgrp" : "FM003",
+                    "expireddate" : "20220224", "fooddetail" : "","memo" : "유통기한 짧음"
+                }
+            },
+            "sections002" : { 
+                "food001" : {
+                    "key" : "food001", "foodcd" : "100101000300000001", "foodcodename" : "가공식품", "foodname" : "비비고만두", "foodgrp" : "FM001",
+                    "expireddate" : "20231024", "fooddetail" : "ㅎㅎㅎ","memo" : "바삭함"
+                }, 
+                "food002" : {
+                    "key" : "food002", "foodcd" : "100101000300000001", "foodcodename" : "아이스크림", "foodname" : "돼지바", "foodgrp" : "FM002",
+                    "expireddate" : "20220201", "fooddetail" : "23일날 삼","memo" : "맛남"
+                }
+                
+            }
+         }    
+     }
+}

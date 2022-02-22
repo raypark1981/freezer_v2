@@ -3,3 +3,24 @@
     flex-direction:column;
     width: 100%;
 }
+
+.freezer_name{
+    height: 2.1875rem;
+    padding: 0.4375rem;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-weight: 400;
+    color: var(--color-dark-grey);
+    letter-spacing: .1rem;
+}
+
+.freezer_name i {
+    display: inline-block;
+    background-image: url('../../icon/freezer_logo.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 1.1875rem;
+    height: 1.625rem;
+}

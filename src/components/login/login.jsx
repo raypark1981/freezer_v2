@@ -1,20 +1,24 @@
-import React, { MouseEventHandler } from 'react';
+import React, { MouseEventHandler, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './login.module.css';
+import { AuthServiceContext } from '../../App';
+import { useEffect } from 'react';
 
-const Login = ({ authService }) => {
+const Login = () => {
     const navigate = useNavigate();
+    const serviceContext = useContext(AuthServiceContext);
     const handleClick = (e) => {
         const type = e.currentTarget.id;
-        const promise = authService.signIn(type);
+        const promise = serviceContext.signIn(type);
+        
         promise.then(function (data) {
-            
             goToFreezer(data);
         })
     }
 
     const goToFreezer = (user) => { 
-         navigate("./freezer", { state: { userId: user.user.uid }, replace: true });
+        // getUserId(user.user.uid);
+        navigate("./freezer", { state: { userId: user.user.uid }, replace: true });
         // navigate("./freezer", { state: {userId: user.user.uid}});
     }
 

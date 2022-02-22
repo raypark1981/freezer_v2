@@ -1,0 +1,73 @@
+
+.food_container{
+    width: 100%;
+    background-color: antiquewhite;
+}
+.outline{
+    width: 100%;
+    padding:.25rem 0.5rem;
+    background-color: var(--color-light-grey);
+}
+.food{
+    display:flex;
+    background-color:var(--color-white);
+}
+.img{
+    width: 6.25rem;
+    height: 6.25rem;
+    padding:.3rem;
+}
+.img img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+.name{
+    display: inline-block;
+    font-weight:400;
+}
+.nutrition{
+    font-weight: 200;
+    font-size: var(--font-size-small);
+}
+.info{
+    flex-grow: 100;
+    padding: 0.5rem 0.25rem;
+    display: flex;
+    flex-direction: column;
+}
+.memo{
+    font-weight:200;
+    font-size: var(--font-size-small);
+    color:var(--color-dark-grey);
+    margin-top:.25rem
+}
+.btns{
+    display:flex;
+    justify-content:flex-end;
+    margin-top:auto;
+}
+.btn{
+    width: 1.875rem;
+    height: 1.875rem;
+    margin-right: .4rem;
+    border:0;
+    background-size: cover;
+    background-color: transparent;
+}
+.recipe{
+    transform:scale(.95);
+    background-image: url(../../../icon/recipe_off.png);
+}
+.basket{
+    transform:scale(1.1);
+    background-image: url(../../../icon/basket_off.png);
+}
+.date{
+    transform:scale(.91);
+    background-image: url(../../../icon/date.png);
+}
+.warning{
+    
+    background-image: url(../../../icon/warning_off.png);
+}

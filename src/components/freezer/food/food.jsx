@@ -3,19 +3,22 @@ import styles from './food.module.css';
 
 const Food = ({food}) => { 
     return (
-        <li className={styles.food_container}>
+        <li className={`${styles.food_container} ${food && food.master_code}`}
+            data-food-grp={food && food.food_grp}>
             <div className={styles.outline}>
                 <div className={styles.food} >
                     <div className={styles.img} >
-                        <img src="" alt="" />
+                        <img src="../../images/foods/FM001.png" alt="" />
                     </div>
                     <div className={styles.info} >
-                        <h3 className={styles.name} ></h3>
-                        <span className={styles.nutrition} ></span>
-                        <p className={styles.memo} ></p>
+                        <div>
+                            <h3 className={styles.name} >{food && food.food_name}</h3>
+                            <span className={styles.nutrition} >{food && food.nutrition}아연</span>
+                        </div>
+                        <p className={styles.memo} >{food && food.memo}rrr</p>
                         <div className={styles.btns} >
-                            <button className={`${styles.btn} ${styles.basket}`}><i></i></button>
                             <button className={`${styles.btn} ${styles.recipe}`}><i></i></button>
+                            <button className={`${styles.btn} ${styles.basket}`}><i></i></button>
                             <button className={`${styles.btn} ${styles.date}`}><i></i></button>
                             <button className={`${styles.btn} ${styles.warning}`}><i></i></button>
                         </div>
