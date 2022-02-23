@@ -1,6 +1,8 @@
 import React, { useRef } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import AddFood from './components/addfood/addFood';
+import AddDetail from './components/addfood/addDetail';
+import AddMemo from './components/addfood/addMemo';
 import Freezer from './components/freezer/freezer';
 import Login from './components/login/login';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
@@ -22,6 +24,8 @@ const App = ({ authService, foodService }) => {
                     <Route path="/" element={<Login/>} />
                     <Route path="/freezer" element={<Freezer />} />
                     <Route path="/addFood" element={<AddFood />} />
+                    <Route path="/addDetail" element={<AddDetail />} />
+                    <Route path="/addMemo" element={<AddMemo />} />
                 </Routes>    
                 </div>
             </CSSTransition>    

@@ -99,6 +99,7 @@
     transform: scale(.9);
 }
 .ask, .right_arrow{
+    margin-right: .5rem;
     line-height: 1rem;
     color:var(--color-dark-grey);
     font-size: var(--font-size-small);

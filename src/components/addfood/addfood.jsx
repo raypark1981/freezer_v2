@@ -9,9 +9,8 @@ import moment from 'moment';
 const AddFood = ({ history }) => { 
     const [food, setFood] = useState({});
     const [actInputName, setActInputName] = useState(true);
-    const [actFoodType, setFoodType] = useState(false);
-    const [actKeepCalendar, setKeepCalendar] = useState(false);
-    const [actExpiredCalendar, setExpiredCalendar] = useState(false);
+    const [actKeepCalendar, setActKeepCalendar] = useState(false);
+    const [actExpiredCalendar, setActExpiredCalendar] = useState(false);
     const refName = useRef();
 
     const navigate = useNavigate();
@@ -41,7 +40,8 @@ const AddFood = ({ history }) => {
                 expiredDate: value
             }))
         }
-    } , []);
+    }, []);
+    
     const handleFoodType = useCallback((e) => { 
         setFood((food) => ({
             ...food,
@@ -52,17 +52,32 @@ const AddFood = ({ history }) => {
     const handleDateClick = (e) => { 
         const target = e.currentTarget.dataset.type;
         if ('keep' === target) {
-            setKeepCalendar(!actKeepCalendar);
-            !actKeepCalendar && setExpiredCalendar(false);
+            setActKeepCalendar(!actKeepCalendar);
+            !actKeepCalendar && setActExpiredCalendar(false);
         } else { 
-            setExpiredCalendar(!actExpiredCalendar);
-            !actExpiredCalendar && setKeepCalendar(false);
+            setActExpiredCalendar(!actExpiredCalendar);
+            !actExpiredCalendar && setActKeepCalendar(false);
+        }
+    }
+    
+    const goToPage = (e) => { 
+        const target = e.currentTarget.dataset.target;
+        switch (target) { 
+            case 'back':
+                navigate(-1);
+                break;
+            case 'addDetail':
+                navigate('/addDetail', { state: { food, userId }})
+                break;
+            case 'addMemo':
+                navigate('/addMemo', { state: { food, userId }})
+                break;
         }
     }
 
-    const backHome = () => { 
-        navigate(-1);
-    }
+    useEffect(() => { 
+        !!location.state && setFood(!!location.state.food ? location.state.food : {} );
+    }, [])
 
     useEffect(() => { 
         serviceContext.checkUserState((user) => { 
@@ -75,15 +90,16 @@ const AddFood = ({ history }) => {
         })
     }, [])
 
+    console.log(actInputName);
     return (
         <section className={styles.add_food}>
             <header className={styles.header}>
                 <div>
-                    <button className={styles.left} onClick={ backHome}></button>
+                    <button data-target="back" className={styles.left} onClick={goToPage}></button>
                 </div>
                 <h3 className={`${styles.middle} ${styles.align_center}` }>추가</h3>
                 <div>
-                    <button className={styles.right} onClick={ backHome}></button>
+                    <button data-target="back" className={styles.right} onClick={goToPage}></button>
                 </div>
             </header>
             <div className={styles.block}>
@@ -91,7 +107,6 @@ const AddFood = ({ history }) => {
                 <div className={styles.middle}>식품명</div>
                 {
                     actInputName && <>
-                        
                         <div className={styles.ask}  onClick={handleInputName}>{!!food.foodName ? food.foodName : "입력하세요"}
                         <i></i>
                         </div>
@@ -109,9 +124,7 @@ const AddFood = ({ history }) => {
             <div className={styles.block}>
                 <button className={`${styles.icon} ${styles.foodcup}`}></button>
                 <div className={styles.middle}>품목명</div>
-                {actFoodType && <div className={styles.right_arrow}>선택하세요</div>}
-                {!actFoodType && <FoodType foodGrp={food.foodGrp} onChange={handleFoodType }/>}
-                
+                <FoodType foodGrp={food.foodGrp} onChange={handleFoodType } />
             </div>
             <div className={styles.block}>
                 <button className={`${styles.icon} ${styles.clock}`}></button>
@@ -140,14 +153,16 @@ const AddFood = ({ history }) => {
                     </div>
                 </div>
             </div>
-            <div className={styles.block}>
+            <div className={styles.block} onClick={goToPage} data-target="addDetail" >
                 <button className={`${styles.icon} ${styles.chat}`}></button>
                 <div className={styles.middle}>세부사항</div>
+                <p className={styles.ask}> {food.foodDetail} </p>
                 <div className={styles.right_arrow}></div>
             </div>
-            <div className={styles.block}>
+            <div className={styles.block} onClick={goToPage} data-target="addMemo" >
                 <button className={`${styles.icon} ${styles.memo}`}></button>
                 <div className={styles.middle}>메모</div>
+                <p className={styles.ask}> {food.memo} </p>
                 <div className={styles.right_arrow}></div>
             </div>
         </section>
@@ -157,7 +172,7 @@ const AddFood = ({ history }) => {
 const FoodType = React.memo(({foodGrp , onChange}) => { 
     return (
         <div className={ styles.food_type}>
-        <select defaultValue={foodGrp} id="foodType" onChange={onChange}>
+        <select value={foodGrp} id="foodType" onChange={onChange}>
         <option value="">전 체</option>
         <option value="FM001">곡류 및 그 제품</option>
         <option value="FM002">감자 및 전분류</option>

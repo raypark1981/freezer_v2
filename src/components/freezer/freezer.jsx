@@ -43,7 +43,7 @@ const Freezer = ({ }) => {
             const fod = temp["foods"];
             
             // main freezer
-            const mainFreezerKey = Object.keys(fre).filter(key => fre[key].mainyn === "Y");
+            const mainFreezerKey = Object.keys(fre).filter(key => fre[key].mainYN === "Y");
             // main freezer > sections
             const mainSections = sec[mainFreezerKey];
 
