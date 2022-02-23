@@ -1,30 +1,69 @@
-import React, { useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { useContext, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import styles from './addfood.module.css';
+import styles from './addFood.module.css';
 import { AuthServiceContext } from '../../App';
-import FoodCalendar from '../utils/FoodCalendar/FoodCalendar';
-
+import FoodCalendar from '../utils/FoodCalendar/foodCalendar';
+import moment from 'moment';
 
 const AddFood = ({ history }) => { 
+    const [food, setFood] = useState({});
     const [actInputName, setActInputName] = useState(true);
     const [actFoodType, setFoodType] = useState(false);
-    
+    const [actKeepCalendar, setKeepCalendar] = useState(false);
+    const [actExpiredCalendar, setExpiredCalendar] = useState(false);
+    const refName = useRef();
+
     const navigate = useNavigate();
     const location = useLocation();
     const serviceContext = useContext(AuthServiceContext);
     const userId = location.state && location.state.userId;
 
-    const handleInputName = () => { 
+    const handleInputName = (e) => {
+        if (e.currentTarget.tagName === 'INPUT') { 
+            setFood({
+                ...food, 
+                foodName: refName.current.value
+            })
+        }
         setActInputName(!actInputName);
     }
+
+    const handleSelected = useCallback((value, target) => {
+        if ('keep' === target) {
+            setFood((food) => ({
+                ...food,
+                insertedDate: value
+            }))
+        } else {
+            setFood((food) => ({
+                ...food,
+                expiredDate: value
+            }))
+        }
+    } , []);
+    const handleFoodType = useCallback((e) => { 
+        setFood((food) => ({
+            ...food,
+            foodGrp: e.target.value
+        }))
+    }, [])
+
+    const handleDateClick = (e) => { 
+        const target = e.currentTarget.dataset.type;
+        if ('keep' === target) {
+            setKeepCalendar(!actKeepCalendar);
+            !actKeepCalendar && setExpiredCalendar(false);
+        } else { 
+            setExpiredCalendar(!actExpiredCalendar);
+            !actExpiredCalendar && setKeepCalendar(false);
+        }
+    }
+
     const backHome = () => { 
         navigate(-1);
     }
-    // let date = moment(new Date());
-    // // 년-월-일
-    // console.log(date.format("YYYY년 MM월 DD일")); // 2021-01-27
-    
+
     useEffect(() => { 
         serviceContext.checkUserState((user) => { 
             if (user) { 
@@ -35,7 +74,6 @@ const AddFood = ({ history }) => {
             }
         })
     }, [])
-
 
     return (
         <section className={styles.add_food}>
@@ -50,16 +88,18 @@ const AddFood = ({ history }) => {
             </header>
             <div className={styles.block}>
                 <button className={`${styles.icon} ${styles.foodcup}`}></button>
+                <div className={styles.middle}>식품명</div>
                 {
                     actInputName && <>
-                        <div className={styles.middle}>식품명</div>
-                        <div className={styles.ask}>입력하세요</div>
-                        <i onClick={handleInputName}></i>
+                        
+                        <div className={styles.ask}  onClick={handleInputName}>{!!food.foodName ? food.foodName : "입력하세요"}
+                        <i></i>
+                        </div>
                     </>
                 }
                 {
                     !actInputName && <>
-                        <input type="text" className={styles.input_name} placeholder="이름을 입력하세요.." />
+                        <input ref={refName} type="text" className={styles.input_name} placeholder="이름을 입력하세요.." defaultValue={food.foodName} />
                         <input type="button" className={styles.btn_save_name} onClick={handleInputName}/>
                     </>
                 }
@@ -70,26 +110,33 @@ const AddFood = ({ history }) => {
                 <button className={`${styles.icon} ${styles.foodcup}`}></button>
                 <div className={styles.middle}>품목명</div>
                 {actFoodType && <div className={styles.right_arrow}>선택하세요</div>}
-                {!actFoodType && <FoodType />}
+                {!actFoodType && <FoodType foodGrp={food.foodGrp} onChange={handleFoodType }/>}
                 
             </div>
             <div className={styles.block}>
                 <button className={`${styles.icon} ${styles.clock}`}></button>
                 <div className={styles.middle}>
-                    <div className={styles.keepdate_title}>
-                    보관일시
+                    <div data-type="keep" onClick={handleDateClick}>
+                        <div className={styles.keep_date_title}>
+                        보관일시
+                        </div>
+                        <div className={styles.keep_date}>
+                        {food.insertedDate && moment(food.insertedDate).format("YYYY년 MM월 DD일")}
+                        </div>
                     </div>
-                    <div className={styles.keepdate}>
-                    2022년 02월 01일
+                    <div className={styles.calendar_holder}>
+                        <FoodCalendar active={actKeepCalendar} selected={handleSelected} setValueTarget={"keep"}/>
                     </div>
-                    <div className={styles.consume_title}>
-                    소비기한
+                    <div data-type="expired" onClick={handleDateClick}>
+                        <div className={styles.expired_title}>
+                        소비기한
+                        </div>
+                        <div className={styles.expired_date}>
+                            {food.expiredDate && moment(food.expiredDate).format("YYYY년 MM월 DD일")}
+                        </div>
                     </div>
-                    <div className={styles.consume_date}>
-                    2022년 02월 01일
-                    </div>
-                    <div>
-                        <FoodCalendar active={true}/>
+                    <div className={styles.calendar_holder}>
+                        <FoodCalendar active={actExpiredCalendar} selected={handleSelected} setValueTarget={"expired"}/>
                     </div>
                 </div>
             </div>
@@ -107,10 +154,10 @@ const AddFood = ({ history }) => {
     )
 }
 
-const FoodType = () => { 
+const FoodType = React.memo(({foodGrp , onChange}) => { 
     return (
         <div className={ styles.food_type}>
-        <select id="foodType">
+        <select defaultValue={foodGrp} id="foodType" onChange={onChange}>
         <option value="">전 체</option>
         <option value="FM001">곡류 및 그 제품</option>
         <option value="FM002">감자 및 전분류</option>
@@ -131,7 +178,7 @@ const FoodType = () => {
         <option value="FM017">조리가공식품류</option>
         <option value="FM018">기타</option>
     </select></div>);
-}
+})
 
 export default AddFood;
 

@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import AddFood from './components/addfood/addfood';
+import AddFood from './components/addfood/addFood';
 import Freezer from './components/freezer/freezer';
 import Login from './components/login/login';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';

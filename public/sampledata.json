@@ -2,8 +2,8 @@
     "HpWnaQ2Vyyczzd2te5V5NrCUOUI3" : {
         "userInfo" :  { "email" : "babopygam"}, 
         "freezers": {
-            "freezerkey001" : { "key" : "freezerkey001" , "name": "울집냉장고" ,"mainyn": "Y"},
-            "freezerkey002" : { "key" : "freezerkey002" , "name": "가게냉장고" ,"mainyn": "N"}
+            "freezerkey001" : { "key" : "freezerkey001" , "name": "울집냉장고" ,"mainYn": "Y"},
+            "freezerkey002" : { "key" : "freezerkey002" , "name": "가게냉장고" ,"mainYn": "N"}
         }, 
         "sections": {
            "freezerkey001" : [
@@ -18,26 +18,26 @@
         "foods": {
             "sections001" : { 
                 "food001" : {
-                    "key" : "food001", "foodcd" : "100101000300000001", "foodcodename" : "과자", "foodname" : "쌀로별", "foodgrp" : "FM001",
-                    "expireddate" : "20231024", "fooddetail" : "","memo" : "존맛탱"
+                    "key" : "food001", "foodCd" : "100101000300000001", "foodCodeName" : "과자", "foodName" : "쌀로별", "foodGrp" : "FM001",
+                    "insertedDate": "20210201", "expiredDate" : "20231024", "foodDetail" : "","memo" : "존맛탱"
                 }, 
                 "food002" : {
-                    "key" : "food002", "foodcd" : "100101000300000001", "foodcodename" : "유제품", "foodname" : "우유", "foodgrp" : "FM002",
-                    "expireddate" : "20220201", "fooddetail" : "21일날 삼","memo" : "맛있는 우유"
+                    "key" : "food002", "foodCd" : "100101000300000001", "foodCodeName" : "유제품", "foodName" : "우유", "foodGrp" : "FM002",
+                    "insertedDate": "20210203", "expiredDate" : "20220201", "foodDetail" : "21일날 삼","memo" : "맛있는 우유"
                 }, 
                 "food003" : {
-                    "key" : "food003", "foodcd" : "100101000300000001", "foodcodename" : "콩", "foodname" : "두부", "foodgrp" : "FM003",
-                    "expireddate" : "20220224", "fooddetail" : "","memo" : "유통기한 짧음"
+                    "key" : "food003", "foodCd" : "100101000300000001", "foodCodeName" : "콩", "foodName" : "두부", "foodGrp" : "FM003",
+                    "insertedDate": "20210205", "expiredDate" : "20220224", "foodDetail" : "","memo" : "유통기한 짧음"
                 }
             },
             "sections002" : { 
                 "food001" : {
-                    "key" : "food001", "foodcd" : "100101000300000001", "foodcodename" : "가공식품", "foodname" : "비비고만두", "foodgrp" : "FM001",
-                    "expireddate" : "20231024", "fooddetail" : "ㅎㅎㅎ","memo" : "바삭함"
+                    "key" : "food001", "foodCd" : "100101000300000001", "foodCodeName" : "가공식품", "foodName" : "비비고만두", "foodGrp" : "FM001",
+                    "insertedDate": "20210209", "expiredDate" : "20231024", "foodDetail" : "ㅎㅎㅎ","memo" : "바삭함"
                 }, 
                 "food002" : {
-                    "key" : "food002", "foodcd" : "100101000300000001", "foodcodename" : "아이스크림", "foodname" : "돼지바", "foodgrp" : "FM002",
-                    "expireddate" : "20220201", "fooddetail" : "23일날 삼","memo" : "맛남"
+                    "key" : "food002", "foodCd" : "100101000300000001", "foodCodeName" : "아이스크림", "foodName" : "돼지바", "foodGrp" : "FM002",
+                    "inserteddDte": "202102020", "expiredDate" : "20220201", "foodDetail" : "23일날 삼","memo" : "맛남"
                 }
                 
             }

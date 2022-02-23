@@ -78,17 +78,18 @@
     font-weight: 200;
     font-size: var(--font-size-small);
     width: 100%;
+    outline: none;
 }
-.keepdate_title, .consume_title{
+.keep_date_title, .expired_title{
     margin-top:.5rem;
 }
-.keepdate, .consume_date{
+.keep_date, .expired_date{
     letter-spacing: 0;
  font-size: var(--font-size-small);
  color:var(--color-dark-grey);
 }
-.custom_calendar{
-    height: 500px;
+.calendar_holder{
+    overflow: hidden;
 }
 .chat{
     background-image: url('../../icon/chat.png');
@@ -98,17 +99,19 @@
     transform: scale(.9);
 }
 .ask, .right_arrow{
+    line-height: 1rem;
     color:var(--color-dark-grey);
     font-size: var(--font-size-small);
 }
-.ask+i{
+.ask i{
     background-image: url(../../icon/vertical_dot.png);
     background-size: cover;
     background-repeat: no-repeat;
     width: 0.8125rem;
     height: 1rem;
     display: inline-block;
-    margin-right: .5rem;
+    margin-right: 0.5rem;
+    vertical-align: middle;
 }
 .input_name{
     height: 1.6rem;
@@ -120,8 +123,9 @@
     border-bottom: 1px solid var(--color-light-grey);
     font-weight: 200;
     font-size: var(--font-size-small);
-    width: 80%;
+    width: 63%;
     text-align: right;
+    outline: none;
 }
 .btn_save_name{
     width: 1.2rem;
