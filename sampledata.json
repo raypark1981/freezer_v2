@@ -2,8 +2,8 @@
     "HpWnaQ2Vyyczzd2te5V5NrCUOUI3" : {
         "userInfo" :  { "email" : "babopygam"}, 
         "freezers": {
-            "freezerkey001" : { "key" : "freezerkey001" , "name": "울집냉장고" ,"mainYn": "Y"},
-            "freezerkey002" : { "key" : "freezerkey002" , "name": "가게냉장고" ,"mainYn": "N"}
+            "freezerkey001" : { "key" : "freezerkey001" , "name": "울집냉장고" ,"mainYN": "Y"},
+            "freezerkey002" : { "key" : "freezerkey002" , "name": "가게냉장고" ,"mainYN": "N"}
         }, 
         "sections": {
            "freezerkey001" : [
