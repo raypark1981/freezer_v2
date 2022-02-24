@@ -46,15 +46,11 @@ const AddDetail = () => {
         })
     }
 
-    useEffect(() => { 
-        console.log('addDetail', state);
-        
-    }, [])
 
     useEffect(() => { 
         serviceContext.checkUserState((user) => { 
             if (user) { 
-                if (state.userId !== user.uid) { 
+                if (state.user.userId !== user.uid) { 
                     alert('사용자가 없습니다. ')
                     navigate('/', {replace : true})
                 }

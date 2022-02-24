@@ -9,18 +9,20 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 export const AuthServiceContext = React.createContext(null);
 export const FoodServiceContext = React.createContext(null);
+export const DataServiceContext = React.createContext(null);
 
-const App = ({ authService, foodService }) => {
+const App = ({ authService, foodService, dataService}) => {
   const location = useLocation();
   const nodeRef = useRef(null);
   return (
     <div className="app">
-    <FoodServiceContext.Provider value={foodService}>
+      <DataServiceContext.Provider value={dataService}>
+      <FoodServiceContext.Provider value={foodService}>
       <AuthServiceContext.Provider value={authService}>
         <TransitionGroup component={null}>
-            <CSSTransition nodeRef={nodeRef} key={location.key} classNames="fade" timeout={300} >
+          <CSSTransition nodeRef={nodeRef} key={location.key} classNames="fade" timeout={300} >
                 <div ref={nodeRef}>
-                  <Routes location={location}>
+                <Routes location={location}>
                     <Route path="/" element={<Login/>} />
                     <Route path="/freezer" element={<Freezer />} />
                     <Route path="/addFood" element={<AddFood />} />
@@ -28,10 +30,11 @@ const App = ({ authService, foodService }) => {
                     <Route path="/addMemo" element={<AddMemo />} />
                 </Routes>    
                 </div>
-            </CSSTransition>    
+          </CSSTransition>    
         </TransitionGroup>
-        </AuthServiceContext.Provider>
+      </AuthServiceContext.Provider>
       </FoodServiceContext.Provider>
+      </DataServiceContext.Provider>
     </div>
   );
 }

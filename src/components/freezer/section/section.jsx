@@ -8,10 +8,10 @@ const Section = ({ section, foods }) => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const handleClick = () => {
-        navigate("/addfood", { state: location.state });
+    const handleClick = (e) => {
+        navigate("/addfood", { state: { ...location.state, sectionKey: e.currentTarget.dataset.section }});
     }
-    
+
     return (
         <div className={styles.section}>
             <div className={styles.container}>
@@ -22,7 +22,7 @@ const Section = ({ section, foods }) => {
                 </div>
                 <div className={styles.drawer_name}>{section.name}</div>
                 <div className={styles.add_food}>
-                    <FontAwesomeIcon icon={faSquarePlus} className={styles.plus} onClick={handleClick}/>
+                    <FontAwesomeIcon icon={faSquarePlus} className={styles.plus} data-section={section.key} onClick={handleClick}/>
                 </div>
             </div>
             <ul>

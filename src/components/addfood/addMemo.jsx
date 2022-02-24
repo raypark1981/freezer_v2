@@ -34,14 +34,14 @@ const AddMemo = () => {
     useEffect(() => { 
         serviceContext.checkUserState((user) => { 
             if (user) { 
-                if (state.userId !== user.uid) { 
+                if (state.user.userId !== user.uid) { 
                     alert('사용자가 없습니다. ')
                     navigate('/', {replace : true})
                 }
             }
         })
     }, [])
-
+    console.log(state);
     return (
         <section className={styles.add_memo}>
             <header className={styles.header}>

@@ -4,24 +4,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './freezer.module.css';
 import Header from '../header/header';
 import Section from './section/section';
-import { AuthServiceContext, FoodServiceContext } from '../../App';
+import { AuthServiceContext, DataServiceContext } from '../../App';
 import { useState } from 'react';
-
-
-
-const foods = [{
-    food_key : -1,
-    master_code : '', 
-    food_cd: '', 
-    foodcd_name: '우유',
-    food_name : '우유1',
-    food_grp : '',
-    expired_date : new Date() ,
-    food_detail : '서울우유' , 
-    memo : '하하',
-    basket_memo : '', 
-    basket_yn : 'n'
-}];
 
 const Freezer = ({ }) => { 
     const [freezer, setFreezer] = useState({});
@@ -30,35 +14,37 @@ const Freezer = ({ }) => {
 
     const location = useLocation();
     const navigate = useNavigate();
-    const userId = location.state && location.state.userId;
+    const [state, setState] = useState(location.state);
 
     const authServiceContext = useContext(AuthServiceContext);
-    const foodServiceContext = useContext(FoodServiceContext);
+    const dataServiceContext = useContext(DataServiceContext);
 
     useEffect(() => {
-        foodServiceContext.foods(userId).then((data) => {
-            const temp = data[userId];
-            const fre = temp["freezers"];
-            const sec = temp["sections"];
-            const fod = temp["foods"];
+        
+        const promise = dataServiceContext.getFreezer(state.user.userId);
+        promise.then((datas) => { 
+            const fre = datas[0];
+            const sec = datas[1];
             
             // main freezer
             const mainFreezerKey = Object.keys(fre).filter(key => fre[key].mainYN === "Y");
             // main freezer > sections
             const mainSections = sec[mainFreezerKey];
-
+    
             setFreezer(fre[mainFreezerKey]);
             setSections(mainSections)
-            //food all
-            setFoods(fod);
+            
+        })
+        
+            // //food all
+            // setFoods(fod);
 
-        });
     } , [])
 
     useEffect(() => { 
         authServiceContext.checkUserState((user) => { 
             if (user) { 
-                if (userId !== user.uid) { 
+                if (state.user.userId !== user.uid) { 
                     navigate('/', {replace : true})
                 }
             }

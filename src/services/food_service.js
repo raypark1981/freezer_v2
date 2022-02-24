@@ -4,6 +4,10 @@ class FoodService {
       method: "GET",
     }).then((data) => data.json());
   };
+
+  addfood = async (food) => {
+    return await fetch("/");
+  };
 }
 
 export default FoodService;

@@ -2,11 +2,12 @@ import React, { useCallback, useRef, useState } from 'react';
 import { useContext, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './addFood.module.css';
-import { AuthServiceContext } from '../../App';
+import { AuthServiceContext , DataServiceContext } from '../../App';
 import FoodCalendar from '../utils/FoodCalendar/foodCalendar';
 import moment from 'moment';
 
 const AddFood = ({ history }) => { 
+
     const [food, setFood] = useState({});
     const [actInputName, setActInputName] = useState(true);
     const [actKeepCalendar, setActKeepCalendar] = useState(false);
@@ -15,8 +16,9 @@ const AddFood = ({ history }) => {
 
     const navigate = useNavigate();
     const location = useLocation();
-    const serviceContext = useContext(AuthServiceContext);
-    const userId = location.state && location.state.userId;
+    const dataServiceContext = useContext(DataServiceContext);
+    const authSrviceContext = useContext(AuthServiceContext);
+    const [state , setState] = useState(location.state);
 
     const handleInputName = (e) => {
         if (e.currentTarget.tagName === 'INPUT') { 
@@ -59,18 +61,26 @@ const AddFood = ({ history }) => {
             !actExpiredCalendar && setActKeepCalendar(false);
         }
     }
-    
+
     const goToPage = (e) => { 
         const target = e.currentTarget.dataset.target;
         switch (target) { 
-            case 'back':
-                navigate(-1);
+            case 'save':
+                if (!food.foodName) { 
+                    alert('푸드 이름이 필요합니다.');
+                    return;
+                }
+
+                const foodKey = !food.key && ('fd' + Date.now());
+                
+                dataServiceContext.setFood(state.user.userId, state.sectionKey, { ...food, key: foodKey });
+                navigate('/freezer', { state })
                 break;
             case 'addDetail':
-                navigate('/addDetail', { state: { food, userId }})
+                navigate('/addDetail', { state: { ...state, food: { ...food } }})
                 break;
             case 'addMemo':
-                navigate('/addMemo', { state: { food, userId }})
+                navigate('/addMemo', { state: { ...state, food: { ...food } } })
                 break;
         }
     }
@@ -80,26 +90,25 @@ const AddFood = ({ history }) => {
     }, [])
 
     useEffect(() => { 
-        serviceContext.checkUserState((user) => { 
+        authSrviceContext.checkUserState((user) => { 
             if (user) { 
-                if (userId !== user.uid) { 
+                if (state.user.userId !== user.uid) { 
                     alert('사용자가 없습니다. ')
                     navigate('/', {replace : true})
                 }
             }
         })
     }, [])
-
-    console.log(actInputName);
+    console.log(food);
     return (
         <section className={styles.add_food}>
             <header className={styles.header}>
                 <div>
-                    <button data-target="back" className={styles.left} onClick={goToPage}></button>
+                    <button data-target="delete" className={styles.left} onClick={goToPage}></button>
                 </div>
                 <h3 className={`${styles.middle} ${styles.align_center}` }>추가</h3>
                 <div>
-                    <button data-target="back" className={styles.right} onClick={goToPage}></button>
+                    <button data-target="save" className={styles.right} onClick={goToPage}></button>
                 </div>
             </header>
             <div className={styles.block}>
@@ -191,7 +200,7 @@ const FoodType = React.memo(({foodGrp , onChange}) => {
         <option value="FM015">음료 및 주류</option>
         <option value="FM016">조미료류</option>
         <option value="FM017">조리가공식품류</option>
-        <option value="FM018">기타</option>
+        <option value="FM018">직접등록</option>
     </select></div>);
 })
 

@@ -7,6 +7,8 @@ import {
   FacebookAuthProvider,
 } from "firebase/auth";
 
+import { getDatabase, ref, set, child, get } from "firebase/database";
+
 const firebaseConfig = {
   apiKey: "AIzaSyCZmtHYnKOEMTH4KJtaWDZTVfjvOo4_euQ",
   authDomain: "freezer-ab56d.firebaseapp.com",
@@ -18,10 +20,17 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const providerGoogle = new GoogleAuthProvider();
 const providerFacebook = new FacebookAuthProvider();
+const db = getDatabase();
+
 export {
   signInWithPopup,
   auth,
   providerFacebook,
   providerGoogle,
   onAuthStateChanged,
+  ref,
+  set,
+  get,
+  db,
+  child,
 };
