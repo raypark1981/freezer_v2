@@ -38,6 +38,11 @@
     align-self: center;
     border-radius: .2rem;
 }
+.plus{
+    border:0;
+    background-color: transparent;
+    color:var(--color-dark-grey);
+}
 .add_food{
     width: 40%;
     text-align: right;

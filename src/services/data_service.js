@@ -17,6 +17,17 @@ class DataService {
     set(ref(db, `${userId}/userInfo/`), userInfo);
   };
 
+  getFoods = (userId, setFood) => {
+    const dbRef = ref(db);
+    get(child(dbRef, `${userId}/foods/`)).then((snapshot) => {
+      if (snapshot.exists()) {
+        setFood(snapshot.val());
+      } else {
+        setFood({});
+      }
+    });
+  };
+
   getFreezer = async (userId, exist, notExist) => {
     const dbRef = ref(db);
     const frz = get(child(dbRef, `${userId}/freezers/`));

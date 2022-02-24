@@ -45,9 +45,10 @@ const AddFood = ({ history }) => {
     }, []);
     
     const handleFoodType = useCallback((e) => { 
+        if (!e.target.dataset.key) return;
         setFood((food) => ({
             ...food,
-            foodGrp: e.target.value
+            foodGrp: e.target.dataset.key
         }))
     }, [])
 
@@ -74,7 +75,10 @@ const AddFood = ({ history }) => {
                 const foodKey = !food.key && ('fd' + Date.now());
                 
                 dataServiceContext.setFood(state.user.userId, state.sectionKey, { ...food, key: foodKey });
-                navigate('/freezer', { state })
+                navigate('/freezer', { state: { user: { ...state.user }}})
+                break;
+            case 'delete':
+                navigate('/freezer', { state: { user: { ...state.user } } })
                 break;
             case 'addDetail':
                 navigate('/addDetail', { state: { ...state, food: { ...food } }})
@@ -99,7 +103,7 @@ const AddFood = ({ history }) => {
             }
         })
     }, [])
-    console.log(food);
+    
     return (
         <section className={styles.add_food}>
             <header className={styles.header}>
@@ -130,11 +134,7 @@ const AddFood = ({ history }) => {
                 
                 
             </div>
-            <div className={styles.block}>
-                <button className={`${styles.icon} ${styles.foodcup}`}></button>
-                <div className={styles.middle}>품목명</div>
-                <FoodType foodGrp={food.foodGrp} onChange={handleFoodType } />
-            </div>
+            
             <div className={styles.block}>
                 <button className={`${styles.icon} ${styles.clock}`}></button>
                 <div className={styles.middle}>
@@ -174,34 +174,48 @@ const AddFood = ({ history }) => {
                 <p className={styles.ask}> {food.memo} </p>
                 <div className={styles.right_arrow}></div>
             </div>
+            <div className={styles.block}>
+                <button className={`${styles.icon} ${styles.foodcup}`}></button>
+                <div className={styles.middle}>품목명</div>
+            </div>
+            <div className={styles.block}>
+                <FoodType foodGrp={food.foodGrp} onChange={handleFoodType } />
+            </div>
         </section>
     )
 }
 
-const FoodType = React.memo(({foodGrp , onChange}) => { 
+const FoodType = React.memo(({ foodGrp, onChange }) => { 
+    const foodGrps = [
+        { key : 'FM013', text: '우유 및 유제품' }
+        ,{ key : 'FM009', text: '육류 및 그 제품' }
+        ,{ key : 'FM011', text: '어패류' }
+        ,{ key : 'FM012', text: '해조류' }
+        ,{ key : 'FM006', text: '채소류' }
+        ,{ key : 'FM015', text: '음료 및 주류' } 
+        ,{ key : 'FM007', text: '버섯류' }
+        ,{ key : 'FM008', text: '과실류' }
+        ,{ key : 'FM014', text: '유지류' }
+        ,{ key : 'FM005', text: '견과류' } 
+        , { key : 'FM001', text: '곡류 및 그 제품' }
+        ,{ key : 'FM002', text: '감자 및 전분류' }
+        ,{ key : 'FM003', text: '당류 및 그 제품' }
+        ,{ key : 'FM004', text: '두류 및 그 제품' }
+        ,{ key : 'FM010', text: '난류' } 
+        ,{ key : 'FM016', text: '조미료류' }
+        ,{ key : 'FM017', text: '조리가공식품류' }
+        // ,{ key: 'FM018', text: '직접등록' }
+    ]
     return (
         <div className={ styles.food_type}>
-        <select value={foodGrp} id="foodType" onChange={onChange}>
-        <option value="">전 체</option>
-        <option value="FM001">곡류 및 그 제품</option>
-        <option value="FM002">감자 및 전분류</option>
-        <option value="FM003">당류 및 그 제품</option>
-        <option value="FM004">두류 및 그 제품</option>
-        <option value="FM005">견과류</option>
-        <option value="FM006">채소류</option>
-        <option value="FM007">버섯류</option>
-        <option value="FM008">과실류</option>
-        <option value="FM009">육류 및 그 제품</option>
-        <option value="FM010">난류</option>
-        <option value="FM011">어패류</option>
-        <option value="FM012">해조류</option>
-        <option value="FM013">우유 및 유제품</option>
-        <option value="FM014">유지류</option>
-        <option value="FM015">음료 및 주류</option>
-        <option value="FM016">조미료류</option>
-        <option value="FM017">조리가공식품류</option>
-        <option value="FM018">직접등록</option>
-    </select></div>);
+            <ul className={styles.food_grps} id="foodType" onClick={onChange}>
+                {
+                    foodGrps.map((i) => { 
+                        return <li key={i.key} data-key={i.key} className={foodGrp === i.key ? styles.selected : ''}>{i.text}</li>;
+                    })
+                }
+            </ul>
+        </div>);
 })
 
 export default AddFood;

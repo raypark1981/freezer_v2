@@ -33,7 +33,8 @@ const Freezer = ({ }) => {
     
             setFreezer(fre[mainFreezerKey]);
             setSections(mainSections)
-            
+
+            mainSections.length > 0 && dataServiceContext.getFoods(state.user.userId, setFoods);
         })
         
             // //food all
@@ -54,7 +55,7 @@ const Freezer = ({ }) => {
     return (
     <>
         <Header />
-        <h3 className={styles.freezer_name}><i></i> 울집냉장고</h3>
+            <h3 className={styles.freezer_name}><i></i>{freezer.name}</h3>
         <main>
             <section className={styles.freezer}>
             {
