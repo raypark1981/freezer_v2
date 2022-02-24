@@ -1,6 +1,6 @@
 {
     "HpWnaQ2Vyyczzd2te5V5NrCUOUI3" : {
-        "userInfo" :  { "email" : "babopygam"}, 
+        "userInfo" :  { "email" : "babopygam@nate.com" , "photo": "" }, 
         "freezers": {
             "freezerkey001" : { "key" : "freezerkey001" , "name": "울집냉장고" ,"mainYN": "Y"},
             "freezerkey002" : { "key" : "freezerkey002" , "name": "가게냉장고" ,"mainYN": "N"}
@@ -8,9 +8,9 @@
         "sections": {
            "freezerkey001" : [
             {
-                "key" : "sections001", "name"  : "신선칸"
+                "key" : "sections001", "name"  : "신선칸" , "order" : 1
             },    {
-                "key" : "sections002", "name"  : "냉동칸"
+                "key" : "sections002", "name"  : "냉동칸", "order" : 2
             }
             ] ,
            "freezerkey002" : [{ "key" : "sections-난수", "name"  : "신선칸"}] 
