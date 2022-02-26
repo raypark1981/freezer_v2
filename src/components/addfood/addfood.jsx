@@ -1,13 +1,13 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { useContext, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styles from './addFood.module.css';
 import { AuthServiceContext , DataServiceContext } from '../../App';
 import FoodCalendar from '../utils/FoodCalendar/foodCalendar';
 import moment from 'moment';
 
 const AddFood = ({ history }) => { 
-
+    const { key } = useParams();
     const [food, setFood] = useState({});
     const [actInputName, setActInputName] = useState(true);
     const [actKeepCalendar, setActKeepCalendar] = useState(false);
@@ -72,9 +72,13 @@ const AddFood = ({ history }) => {
                     return;
                 }
 
-                const foodKey = !food.key && ('fd' + Date.now());
+                if (!food.key) {
+                    const foodKey = ('fd' + Date.now());
+                    dataServiceContext.setFood(state.user.userId, state.sectionKey, { ...food, key: foodKey });
+                } else { 
+                    dataServiceContext.updateFood(state.user.userId, state.sectionKey, { ...food });
+                }
                 
-                dataServiceContext.setFood(state.user.userId, state.sectionKey, { ...food, key: foodKey });
                 navigate('/freezer', { state: { user: { ...state.user }}})
                 break;
             case 'delete':
@@ -90,7 +94,12 @@ const AddFood = ({ history }) => {
     }
 
     useEffect(() => { 
-        !!location.state && setFood(!!location.state.food ? location.state.food : {} );
+        
+        if (!!key) {
+            dataServiceContext.getFoods(state.user.userId, setFood , `${state.sectionKey}/${key}`);
+        } else { 
+            !!location.state && setFood(!!location.state.food ? location.state.food : {} );
+        }
     }, [])
 
     useEffect(() => { 
@@ -103,7 +112,7 @@ const AddFood = ({ history }) => {
             }
         })
     }, [])
-    
+
     return (
         <section className={styles.add_food}>
             <header className={styles.header}>

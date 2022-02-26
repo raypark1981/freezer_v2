@@ -39,9 +39,17 @@
     border-radius: .2rem;
 }
 .plus{
-    border:0;
+    width: 1.8rem;
+    height: 1.8rem;
+    background-image: url('../../../icon/add.png');
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: 50%;
+    border:1px solid var(--color-dark-grey);
+    border-radius: 50%;
     background-color: transparent;
-    color:var(--color-dark-grey);
+    vertical-align: middle;
+    
 }
 .add_food{
     width: 40%;

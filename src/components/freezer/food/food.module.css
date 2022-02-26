@@ -59,15 +59,46 @@
     transform:scale(.95);
     background-image: url(../../../icon/recipe_off.png);
 }
+.recipe.active{
+    transform:scale(.95);
+    background-image: url(../../../icon/recipe_on.png);
+}
 .basket{
     transform:scale(1.1);
     background-image: url(../../../icon/basket_off.png);
+}
+.basket.active{
+    transform:scale(1.1);
+    background-image: url(../../../icon/basket_on.png);
 }
 .date{
     transform:scale(.91);
     background-image: url(../../../icon/date.png);
 }
+.date::after{
+    position: absolute;
+    right: -13%;
+    display: inline-block;
+    min-width: 18px;
+    height: 18px;
+    line-height: 16px;
+    text-align: center;
+    margin-top: -1px;
+    padding: 0 4px;
+    box-sizing: border-box;
+    border-radius: 18px;
+    color: rgb(101, 101, 101);
+    font-size: 14px;
+    border: 1px solid white;
+    background-color: lightgray;
+    content: attr(data-count);
+}
 .warning{
-    
     background-image: url(../../../icon/warning_off.png);
+}
+.warning.active{
+    background-image: url(../../../icon/warning_on.png);
+}
+.warning.ready{
+    background-image: url(../../../icon/warning_ready.png);
 }

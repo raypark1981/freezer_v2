@@ -1,4 +1,41 @@
 .app{
   width: 100%;
   height: 100vh;
+  background:no-repeat url('../public/images/app_background.png');
+  background-size: 100% 100%;
+}
+
+.app_body{
+  max-width: 60rem;
+  height: 100%;
+  display: flex;
+  margin:auto;
+  background-color: var(--color-white);
+}
+.main{
+
+  width: 60%;
+  height: 100%;
+}
+.aside{
+  width: 40%;
+  height: 100%;
+  background-color: var(--color-main-yellow);
+}
+
+@media screen and (max-width: 44rem){
+  .app_body{
+    max-width: 100%;
+    min-width: 22.5rem;
+    display: block;
+  }
+  .main{
+    width: 100%;
+  }
+  .aside{
+    position: absolute;
+    top: 0;
+    left: 100%;
+    z-index: 1;
+  }
 }

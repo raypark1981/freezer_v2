@@ -7,7 +7,7 @@ import Section from './section/section';
 import { AuthServiceContext, DataServiceContext } from '../../App';
 import { useState } from 'react';
 
-const Freezer = ({ }) => { 
+const Freezer = ({  }) => { 
     const [freezer, setFreezer] = useState({});
     const [sections, setSections] = useState([]);
     const [foods, setFoods] = useState({});

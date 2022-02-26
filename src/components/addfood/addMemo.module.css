@@ -21,8 +21,7 @@
     text-align: center;
 }
 .right_holder{
-    position: absolute;
-    right: 0;
+    position: relative;
 }
 .right{
     width: 1.5625rem;
@@ -33,12 +32,14 @@
     background-position: 50%;
     background-size: 60%;
     border:0;
-    margin-right:0.78125rem ;
+    position: absolute;
+    right: 0.78125rem;
+    transform: translateY(-13px);
 }
 
 .block{
     margin-top:10px;
-    height: 100%;
+    height: calc(100% - 7rem);;
 }
 
 .memo{

@@ -7,7 +7,15 @@ import {
   FacebookAuthProvider,
 } from "firebase/auth";
 
-import { getDatabase, ref, set, child, get } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  set,
+  child,
+  get,
+  update,
+  push,
+} from "firebase/database";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCZmtHYnKOEMTH4KJtaWDZTVfjvOo4_euQ",
@@ -31,6 +39,8 @@ export {
   ref,
   set,
   get,
+  update,
+  push,
   db,
   child,
 };

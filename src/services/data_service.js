@@ -1,4 +1,4 @@
-import { ref, db, set, child, get } from "./firebase";
+import { ref, db, set, update, child, get, push } from "./firebase";
 
 class DataService {
   setFreezers = (userId, freezer) => {
@@ -13,13 +13,19 @@ class DataService {
     set(ref(db, `${userId}/foods/${sectionkey}/${food.key}`), food);
   };
 
+  updateFood = (userId, sectionkey, food) => {
+    const updates = {};
+    updates[`${userId}/foods/${sectionkey}/${food.key}`] = food;
+    const value = update(ref(db), updates);
+  };
+
   setUserInfo = (userId, userInfo) => {
     set(ref(db, `${userId}/userInfo/`), userInfo);
   };
 
-  getFoods = (userId, setFood) => {
+  getFoods = (userId, setFood, foodkey = "") => {
     const dbRef = ref(db);
-    get(child(dbRef, `${userId}/foods/`)).then((snapshot) => {
+    get(child(dbRef, `${userId}/foods/${foodkey}`)).then((snapshot) => {
       if (snapshot.exists()) {
         setFood(snapshot.val());
       } else {

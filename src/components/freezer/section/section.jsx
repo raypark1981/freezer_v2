@@ -1,7 +1,5 @@
 import React from 'react';
 import styles from './section.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCarrot } from '@fortawesome/free-solid-svg-icons';
 import Food from '../food/food';
 import { useLocation, useNavigate } from 'react-router-dom';
 const Section = ({ section, foods }) => {
@@ -22,8 +20,7 @@ const Section = ({ section, foods }) => {
                 </div>
                 <div className={styles.drawer_name}>{section.name}</div>
                 <div className={styles.add_food}>
-                    <button className={styles.plus} data-section={section.key} onClick={handleClick}>음식추가
-                    <FontAwesomeIcon icon={faCarrot}/>
+                    <button className={styles.plus} data-section={section.key} onClick={handleClick}>
                     </button>
                     
                 </div>

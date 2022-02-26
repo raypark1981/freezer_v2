@@ -1,5 +1,5 @@
 :root{
-  --color-main-yellow: rgb(250, 191, 1);
+  --color-main-yellow: rgb(255, 200, 20);
   --color-main-text:#000000;
   --color-white:#ffffff;
   --color-light-grey:#f1f1f5;
@@ -13,6 +13,7 @@
 }
 
 *{box-sizing: border-box;margin:0;padding:0;}
+ul{list-style-type: none;}
 body {
   margin: 0;
   font-family:'Nanum Gothic', sans-serif;

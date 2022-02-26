@@ -1,0 +1,136 @@
+.section{
+display:flex;
+flex-direction:column;
+align-items: center;
+justify-content: flex-start;
+height: 100%;
+overflow: hidden;
+}
+
+.header{
+    margin-top: 10rem;
+}
+.me_pic{
+    text-align: center;
+}
+.me_pic img{
+    width: 3.125rem;
+    height: 3.125rem;
+    outline:.2rem solid var(--color-dark-grey);
+    border-radius: 50%;
+}
+.email{
+    margin-top:1rem;
+    border-bottom: 1px solid var(--color-dark-grey);
+    color:var(--color-dark-grey);
+    font-weight: bold;
+    line-height: 2rem;
+}
+.sub_actions{
+    width: 57%;
+    height: 6rem;
+    margin-top:2rem;
+    display: flex;
+    justify-content:space-between;
+}
+.sub_action{
+
+}
+.count{
+    margin-top:1rem;
+    text-align: center;
+    font-weight: bold;
+    color:var(--color-dark-grey);
+}
+.warning i{
+    display: block;
+    width: 50px;
+    height: 50px;
+    background: no-repeat url('../../icon/warning_off.png');
+    background-size: contain;
+}
+.recipe i{
+    display: block;
+    width: 48px;
+    height: 48px;
+    background: no-repeat url('../../icon/recipe_off.png');
+    background-size: contain;
+}
+.basket i{
+    display: block;
+    width: 48px;
+    height: 48px;
+    background: no-repeat url('../../icon/basket_off.png');
+    background-size: contain;
+}
+.actions{
+    width: 90%;
+    /* height: 12rem; */
+    margin-top:auto;
+    margin-bottom: 3rem;
+    display: flex;
+    flex-wrap: wrap;
+}
+.action{
+    width:33.3%;
+    display: flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content: center;
+    height: 6rem;
+}
+.action button{
+    width: 100%;
+    border:0;
+    background-color: transparent;
+    color:var(--color-dark-grey);
+    font-weight: 600;
+
+}
+
+.line_top {
+    border-top:1px solid var(--color-dark-grey);
+}
+.line_left {
+    border-left:1px solid var(--color-dark-grey);
+}
+.line_right {
+    border-right:1px solid var(--color-dark-grey);
+}
+
+.actions i{
+    display:block;
+    width:30px;
+    height:30px;
+    margin-bottom: .5rem;
+}
+.my_edit i{
+    background:no-repeat url('../../icon/lock.png');
+    background-size:contain;
+    background-position: center;
+}
+.my_ref i{
+    background:no-repeat url('../../icon/freezer.png');
+    background-size:contain;
+    background-position: center;
+}
+.my_basket i{
+    background:no-repeat url('../../icon/basket_off.png');
+    background-size:contain;
+    background-position: center;
+}
+.my_recipe i{
+    background:no-repeat url('../../icon/recipe_off.png');
+    background-size:contain;
+    background-position: center;
+}
+.my_notice i{
+    background:no-repeat url('../../icon/notice.png');
+    background-size:contain;
+    background-position: center;
+}
+.my_ask i{
+    background:no-repeat url('../../icon/call.png');
+    background-size:contain;
+    background-position: center;
+}
