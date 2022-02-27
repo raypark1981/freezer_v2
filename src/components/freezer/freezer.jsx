@@ -7,21 +7,20 @@ import Section from './section/section';
 import { AuthServiceContext, DataServiceContext } from '../../App';
 import { useState } from 'react';
 
-const Freezer = ({  }) => { 
+const Freezer = ({ }) => { 
     const [freezer, setFreezer] = useState({});
     const [sections, setSections] = useState([]);
     const [foods, setFoods] = useState({});
 
     const location = useLocation();
     const navigate = useNavigate();
-    const [state, setState] = useState(location.state);
+    const [locationState, setState] = useState(location.state);
 
     const authServiceContext = useContext(AuthServiceContext);
     const dataServiceContext = useContext(DataServiceContext);
 
-    useEffect(() => {
-        
-        const promise = dataServiceContext.getFreezer(state.user.userId);
+    const getMainData = () => { 
+        const promise = dataServiceContext.getFreezer(locationState.user.userId);
         promise.then((datas) => { 
             const fre = datas[0];
             const sec = datas[1];
@@ -34,18 +33,18 @@ const Freezer = ({  }) => {
             setFreezer(fre[mainFreezerKey]);
             setSections(mainSections)
 
-            mainSections.length > 0 && dataServiceContext.getFoods(state.user.userId, setFoods);
+            mainSections.length > 0 && dataServiceContext.getFoods(locationState.user.userId, setFoods);
         })
-        
-            // //food all
-            // setFoods(fod);
+    }
 
+    useEffect(() => {
+        getMainData();
     } , [])
 
     useEffect(() => { 
         authServiceContext.checkUserState((user) => { 
             if (user) { 
-                if (state.user.userId !== user.uid) { 
+                if (locationState.user.userId !== user.uid) { 
                     navigate('/', {replace : true})
                 }
             }
@@ -60,7 +59,7 @@ const Freezer = ({  }) => {
             <section className={styles.freezer}>
             {
                 sections.length > 0 && sections.map((section) => { 
-                    return <Section key={section.key} section={section} foods={foods[section.key]}/>
+                    return <Section key={section.key} section={section} foods={foods[section.key]} />
                 })   
             }   
             </section>

@@ -8,16 +8,27 @@ import FoodService from './services/food_service';
 import { BrowserRouter } from 'react-router-dom';
 import DataService from './services/data_service';
 
+/** redux*/
+import { Provider } from 'react-redux';
+import store from './store'
+
 const authService = new AuthService();
 const foodService = new FoodService();
 const dataService = new DataService();
 
+store.subscribe(() => { 
+  console.log(store.getState());
+})
+
 ReactDOM.render(
+  <Provider store={store}>
     <BrowserRouter>
       <React.StrictMode>
       <App authService={authService} foodService={foodService} dataService={dataService}/>
       </React.StrictMode>
-    </BrowserRouter>,
+    </BrowserRouter>
+  </Provider>
+    ,
   document.getElementById('root')
 );
 

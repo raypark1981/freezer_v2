@@ -3,19 +3,24 @@ import { useNavigate } from 'react-router-dom';
 import styles from './login.module.css';
 import { AuthServiceContext, DataServiceContext } from '../../App';
 import { useEffect } from 'react';
+import { connect } from 'react-redux';
+import uiActionCreator from '../../actions/uiAction';
 
-const Login = () => {
+const Login = ({onOffSpiner}) => {
     const navigate = useNavigate();
     const serviceContext = useContext(AuthServiceContext);
     const dataContext = useContext(DataServiceContext);
     const [photoURL, setPhotoURL] = useState();
 
     const handleClick = (e) => {
+        onOffSpiner();
         const type = e.currentTarget.id;
         const promise = serviceContext.signIn(type);
         
         promise.then(function (data) {
             goToFreezer(data);
+        }).finally(() => { 
+            setTimeout(() => { onOffSpiner() } , 2000)
         })
     }
 
@@ -85,5 +90,9 @@ const Login = () => {
         </section>)
     
 }
-
-export default Login;
+const mapDispatchToProps = (dispatch, ownProps) => { 
+    return {
+        onOffSpiner: () => dispatch(uiActionCreator.onOffSpiner())
+    }   
+}
+export default connect(null, mapDispatchToProps)(Login);

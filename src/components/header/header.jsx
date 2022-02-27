@@ -2,10 +2,13 @@ import React, { useState } from 'react'
 import styles from './header.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faHamburger } from '@fortawesome/free-solid-svg-icons'
-const Header = ({  }) => { 
+import { connect } from 'react-redux'
+import uiActionCreator from '../../actions/uiAction'
+const Header = ({ opened , toggleRightMyInfo }) => { 
+    
     const [open, setOpen] = useState(false);
     const handleClick = () => { 
-        setOpen(!open);
+        toggleRightMyInfo();
     }
 
     return (
@@ -20,5 +23,15 @@ const Header = ({  }) => {
         </header>
     )
 }
+const mapStateToProps = (state) => { 
+    return {
+        opened : state.left_myinfo_opened
+    }
+}
 
-export default Header;
+const mapDispatchToProps = (dispatch, ownProps) => { 
+    return {
+        toggleRightMyInfo: () => dispatch(uiActionCreator.toggleRightMyInfo())
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps) (Header);

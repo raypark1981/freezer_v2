@@ -6,6 +6,7 @@
 }
 
 .app_body{
+  position: relative;
   max-width: 60rem;
   height: 100%;
   display: flex;
@@ -22,20 +23,65 @@
   height: 100%;
   background-color: var(--color-main-yellow);
 }
+.blinder{
+  display:none;
+  position: absolute;
+  top:0;
+  left: 0;
+  opacity: .6;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-dark-grey);
+  z-index: 1
+}
+.blinder.active{
+  display: block;
+}
+
+.spiner{
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.spiner.active{
+  display: flex;
+}
+.spiner i{
+  display: block;
+  width: 6.25rem;
+  height: 6.25rem;
+  background: no-repeat url('./icon/spiner.gif');
+  background-size: contain;
+}
+
 
 @media screen and (max-width: 44rem){
   .app_body{
     max-width: 100%;
     min-width: 22.5rem;
     display: block;
+    position: relative;
+    overflow: hidden;
   }
+  
   .main{
     width: 100%;
   }
   .aside{
     position: absolute;
+    width: 80%;
     top: 0;
     left: 100%;
     z-index: 1;
+  }
+  .aside.active{
+    /* 100% - .aside : width */
+    left: 20%;
+  }
+  .spiner.active{
+   top:0;
   }
 }
