@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import uiActionCreator from '../../../actions/uiAction';
 import { DataServiceContext } from '../../../App';
+import { getSession } from '../../../services/session';
 import styles from './food.module.css';
 
 const Food = memo(({ food , sectionKey , onOffSpiner}) => { 
@@ -29,7 +30,7 @@ const Food = memo(({ food , sectionKey , onOffSpiner}) => {
             default:
                 return;
         }
-        dataServiceContext.updateFood(state.user.userId, sectionKey, { ..._food, ...yn });
+        dataServiceContext.updateFood(getSession["uid"], sectionKey, { ..._food, ...yn });
     }
     const goToPage = (e) => { 
         if (!!e.target.dataset.target) return;

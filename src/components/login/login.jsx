@@ -6,12 +6,12 @@ import { connect } from 'react-redux';
 import uiActionCreator from '../../actions/uiAction';
 import { useCookies } from 'react-cookie';
 import moment from 'moment';
+import { clearSession, setSession } from '../../services/session';
 
 const Login = ({ onOffSpiner }) => {
     const navigate = useNavigate();
     const serviceContext = useContext(AuthServiceContext);
     const dataContext = useContext(DataServiceContext);
-    const [photoURL, setPhotoURL] = useState();
     const [cookies, setCookies] = useCookies();
 
     const handleClick = (e) => {
@@ -39,8 +39,8 @@ const Login = ({ onOffSpiner }) => {
                 })
             }
             
-            // navigate("./freezer", { replace: true });
-            navigate("./freezer", { state: { uid: uid }, replace: true });
+            setSession('uid', uid);
+            navigate("./freezer", { replace: true });
         }
 
         const notExist = () => { 
@@ -62,8 +62,8 @@ const Login = ({ onOffSpiner }) => {
                 "key" : sectionKey , "name": "신선칸" , "order" : 1
             }])
 
-
-            navigate("./freezer", { state: { uid: uid }, replace: true });
+            setSession('uid', uid);
+            navigate("./freezer", { replace: true });
         }
 
         // db에서 사용자 정보 있나 확인
@@ -71,8 +71,9 @@ const Login = ({ onOffSpiner }) => {
     }
 
     useEffect(() => { 
-
-    })
+        clearSession();
+        console.log('clear session');
+    } , [])
 
     return(
         <section className={styles.login}>

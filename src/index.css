@@ -3,6 +3,7 @@
   --color-main-text:#000000;
   --color-white:#ffffff;
   --color-light-grey:#f1f1f5;
+  --color-middle-grey:rgb(216, 216, 216);
   --color-dark-grey:#4a4a4b;
 
   --font-size-big:2rem;
@@ -47,4 +48,45 @@ code {
   transform: translate(0, 0);
 
   transition: opacity 250ms ease-out, transform 300ms ease;
+}
+
+
+.color1{
+  background-color: rgb(255, 197, 108);
+}
+.color2{
+  background-color: rgb(255, 157, 108);
+}
+.color3{
+  background-color: rgb(255, 140, 106);
+}
+.color4{
+  background-color:rgb(255, 128, 136)
+}
+.color5{
+  background-color:rgb(251, 152, 186);
+}
+.color6{
+  background-color:rgb(238, 126, 168);
+}
+.color7{
+  background-color:rgb(234, 156, 218);
+}
+.color8{
+  background-color:rgb(160, 174, 230);
+}
+.color9{
+  background-color:rgb(154, 202, 236);
+}
+.color10{
+  background-color:rgb(135, 218, 223);
+}
+.color11{
+  background-color:rgb(105, 202, 186);
+}
+.color12{
+  background-color:rgb(183, 220, 120);
+}
+.color13{
+  background-color:rgb(63, 168, 244);
 }

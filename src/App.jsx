@@ -9,20 +9,28 @@ import AddMemo from './components/addfood/addMemo';
 import Freezer from './components/freezer/freezer';
 import Login from './components/login/login';
 import MyInfo from './components/myInfo/myInfo';
-
+import MyFreezer from './components/myFreezer/myFreezer';
+import MyBasket from './components/myBasket/myBasket';
+import Recipe from './components/recipe/recipe';
+import Notice from './components/notice/notice';
+import MyEdit from './components/myEdit/myEdit';
 /** styles */
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import styles from './app.module.css'
-
-import uiActionCreator, { TOGGLE_RIGHT_MYINFO } from './actions/uiAction';
+/** action */
+import uiActionCreator from './actions/uiAction';
+/** session */
+import { getSession } from './services/session';
+/**redux */
 import { connect } from 'react-redux';
-import MyEdit from './components/myEdit/myEdit';
+
 
 /** context */
 export const AuthServiceContext = React.createContext(null);
 export const DataServiceContext = React.createContext(null);
 
-const App = ({ authService, foodService, dataService , opened, toggle , spinerOnOff }) => {
+
+const App = ({ authService, dataService , opened, toggle , spinerOnOff }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const nodeRef = useRef(null);
@@ -33,7 +41,7 @@ const App = ({ authService, foodService, dataService , opened, toggle , spinerOn
       authService.checkUserState((user) => { 
         try {
           if (user) {
-            if (location.state['uid'] !== user.uid) {
+            if (getSession('uid') !== user.uid) {
               navigate('/', { replace: true })
             }
           }
@@ -41,7 +49,6 @@ const App = ({ authService, foodService, dataService , opened, toggle , spinerOn
           alert('접근 에러..')
           navigate('/', { replace: true });
         }
-        
       })
     }
   }, [location])
@@ -63,6 +70,10 @@ const App = ({ authService, foodService, dataService , opened, toggle , spinerOn
                   <Route path="/addDetail" element={<AddDetail />} />
                   <Route path="/addMemo" element={<AddMemo />} />
                   <Route path="/myEdit" element={<MyEdit />} />
+                  <Route path="/myFreezer" element={<MyFreezer />} />
+                  <Route path="/myBasket" element={<MyBasket />} />
+                  <Route path="/recipe" element={<Recipe />} />
+                  <Route path="/notice" element={<Notice/>} />
               </Routes>    
               </div>
               <div className={`${styles.blinder} ${opened ? styles.active : ''}`} onClick={toggle}> </div>    

@@ -1,11 +1,11 @@
-import React, { useCallback, useRef, useState } from 'react';
-import { useContext, useEffect } from 'react';
+import React, { useCallback, useRef, useState, useContext, useEffect } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styles from './addFood.module.css';
-import { AuthServiceContext , DataServiceContext } from '../../App';
+
 import FoodCalendar from '../utils/FoodCalendar/foodCalendar';
 import moment from 'moment';
-import { useCookies } from 'react-cookie';
+import { getSession } from '../../services/session';
+import { DataServiceContext } from '../../App';
 
 const AddFood = ({  }) => { 
     const { key } = useParams();
@@ -14,10 +14,11 @@ const AddFood = ({  }) => {
     const location = useLocation();
     const [food, setFood] = useState({});
 
+    const dataServiceContext = useContext(DataServiceContext);
+
     const [actInputName, setActInputName] = useState(true);
     const [actKeepCalendar, setActKeepCalendar] = useState(false);
     const [actExpiredCalendar, setActExpiredCalendar] = useState(false);
-    const dataServiceContext = useContext(DataServiceContext);
     const [state, setState] = useState(location.state);
 
     const handleInputName = (e) => {
@@ -74,15 +75,15 @@ const AddFood = ({  }) => {
 
                 if (!food.key) {
                     const foodKey = ('fd' + Date.now());
-                    dataServiceContext.setFood(state['uid'], state.sectionKey, { ...food, key: foodKey });
+                    dataServiceContext.setFood(getSession('uid'), state.sectionKey, { ...food, key: foodKey });
                 } else { 
-                    dataServiceContext.updateFood(state['uid'], state.sectionKey, { ...food });
+                    dataServiceContext.updateFood(getSession('uid'), state.sectionKey, { ...food });
                 }
 
-                navigate('/freezer', { state : {uid : state.uid }})
+                navigate('/freezer', { })
                 break;
             case 'delete':
-                navigate('/freezer', { state: {uid : state.uid } })
+                navigate('/freezer', { })
                 
                 break;
             case 'addDetail':
@@ -96,12 +97,12 @@ const AddFood = ({  }) => {
 
     useEffect(() => { 
         if (!!key) {
-            dataServiceContext.getFoods(state['uid'], setFood , `${state.sectionKey}/${key}`);
+            dataServiceContext.getFoods(getSession('uid'), setFood , `${state.sectionKey}/${key}`);
         } else { 
-            !!location.state && setFood(!!location.state.food ? location.state.food : {} );
+            !!state && setFood(!!state.food ? state.food : {} );
         }
     }, [])
-console.log(food)
+    
     return (
         <section className={styles.add_food}>
             <header className={styles.header}>

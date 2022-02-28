@@ -1,27 +1,22 @@
-import React, {useContext, useEffect} from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-
-import styles from './freezer.module.css';
+import React, {useContext, useEffect , useState} from 'react';
 import Header from '../header/header';
 import Section from './section/section';
-import { AuthServiceContext, DataServiceContext } from '../../App';
-import { useState } from 'react';
-import { useCookies } from 'react-cookie';
+import styles from './freezer.module.css';
+
+import { useLocation } from 'react-router-dom';
+import { DataServiceContext } from '../../App';
+import { getSession } from '../../services/session';
 
 const Freezer = ({ }) => { 
     const [freezer, setFreezer] = useState({});
     const [sections, setSections] = useState([]);
     const [foods, setFoods] = useState({});
-    const [cookies, setCookies] = useCookies();
     const location = useLocation();
     
-    const navigate = useNavigate();
-    
-    const authServiceContext = useContext(AuthServiceContext);
     const dataServiceContext = useContext(DataServiceContext);
 
     const getMainData = () => { 
-        const promise = dataServiceContext.getFreezer(location.state.uid);
+        const promise = dataServiceContext.getFreezer(getSession('uid'));
         promise.then((datas) => { 
             const fre = datas[0];
             const sec = datas[1];
@@ -34,23 +29,13 @@ const Freezer = ({ }) => {
             setFreezer(fre[mainFreezerKey]);
             setSections(mainSections)
 
-            mainSections.length > 0 && dataServiceContext.getFoods(location.state.uid, setFoods);
+            mainSections.length > 0 && dataServiceContext.getFoods(getSession('uid'),  setFoods);
         })
     }
 
     useEffect(() => {
         getMainData();
     } , [])
-
-    useEffect(() => { 
-        // authServiceContext.checkUserState((user) => { 
-        //     if (user) { 
-        //         if (cookies['uid'] !== user.uid) { 
-        //             navigate('/', {replace : true})
-        //         }
-        //     }
-        // })
-    }, [])
     
     return (
     <>

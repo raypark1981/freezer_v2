@@ -1,60 +1,81 @@
 import React, { useState } from 'react';
-import { useContext, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './myEdit.module.css';
-import { AuthServiceContext , DataServiceContext } from '../../App';
-import CommonService from '../../services/common_service';
 
 const MyEdit = ({ }) => { 
     
     const navigate = useNavigate();
     const location = useLocation();
-    const authSrviceContext = useContext(AuthServiceContext);
-    const [state , setState] = useState(location.state);
+    const [state, setState] = useState(location.state);
+    
     const goToPage = (e) => { 
         const target = e.currentTarget.dataset.target;
         switch (target) { 
             case 'save':
-                
-                navigate('/freezer', { state: { user: { ...state.user }}})
+                navigate('/freezer', {})
                 break;
             case 'delete':
-                navigate('/freezer', { state: { user: { ...state.user } } })
+                navigate('/freezer', {})
                 break;
             
         }
     }
 
 
-    useEffect(() => { 
-        // authSrviceContext.checkUserState((user) => { 
-        //     // console.log(user);
-        // })
-    }, [])
+
 
     return (
-        <section className={styles.add_food}>
+        <section className={styles.my_edit}>
             <header className={styles.header}>
                 <div>
                     <button data-target="delete" className={styles.left} onClick={goToPage}></button>
                 </div>
-                <h3 className={`${styles.middle} ${styles.align_center}` }>추가</h3>
+                <h3 className={`${styles.middle} ${styles.align_center}` }>회원정보</h3>
                 <div>
                     <button data-target="save" className={styles.right} onClick={goToPage}></button>
                 </div>
             </header>
-            
+            <h3 className={styles.email}>
+                "작업이메일"
+            </h3>
             <div className={styles.block} onClick={goToPage} data-target="addDetail" >
-                <button className={`${styles.icon} ${styles.chat}`}></button>
-                <div className={styles.middle}>세부사항</div>
-                <p className={styles.ask}> </p>
-                <div className={styles.right_arrow}></div>
+                <ul>
+                    <li className={styles.info_box}>
+                        <div className={styles.icon_name}>
+                            <i></i>
+                        </div>
+                        <div className={styles.info}>
+                            <div className={styles.info_title}>이름</div>
+                            <div className={styles.info_value}>작업중..</div>
+                        </div>
+                    </li>
+                    <li className={styles.info_box}>
+                        <div className={styles.icon_freezer}>
+                            <i></i>
+                        </div>
+                        <div className={styles.info}>
+                            <div className={styles.info_title}>보유냉장고</div>
+                            <div className={styles.info_value}>넣어라</div>
+                        </div>
+                    </li>
+                    <li className={styles.info_box}>
+                        <div className={styles.icon_level}>
+                            <i></i>
+                        </div>
+                        <div className={`${styles.info} ${styles.last}`}>
+                            <div className={styles.info_title}>회원등급</div>
+                            <div className={styles.info_value}>일반</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div className={styles.block}>
+                <button className={ styles.logout}>로그아웃</button>
             </div>
         </section>
     )
 }
-
-MyEdit.prototype = Object.create(CommonService.prototype);
 
 export default MyEdit;
 
