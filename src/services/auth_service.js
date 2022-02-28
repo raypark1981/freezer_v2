@@ -10,9 +10,13 @@ export default class AuthService {
   signIn = async (type) => {
     return await signInWithPopup(auth, this.getProvider(type));
   };
-  // "HpWnaQ2Vyyczzd2te5V5NrCUOUI3"
+
   checkUserState = (callback) => {
     onAuthStateChanged(auth, callback);
+  };
+
+  currentUser = () => {
+    return auth.currentUser;
   };
 
   getProvider = (type) => {

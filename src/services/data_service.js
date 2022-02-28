@@ -53,7 +53,6 @@ class DataService {
     get(child(dbRef, `${userId}/userInfo/`))
       .then((snapshot) => {
         if (snapshot.exists()) {
-          console.log(1);
           exist(snapshot.val());
         } else {
           notExist();

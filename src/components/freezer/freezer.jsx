@@ -6,21 +6,22 @@ import Header from '../header/header';
 import Section from './section/section';
 import { AuthServiceContext, DataServiceContext } from '../../App';
 import { useState } from 'react';
+import { useCookies } from 'react-cookie';
 
 const Freezer = ({ }) => { 
     const [freezer, setFreezer] = useState({});
     const [sections, setSections] = useState([]);
     const [foods, setFoods] = useState({});
-
+    const [cookies, setCookies] = useCookies();
     const location = useLocation();
+    
     const navigate = useNavigate();
-    const [locationState, setState] = useState(location.state);
-
+    
     const authServiceContext = useContext(AuthServiceContext);
     const dataServiceContext = useContext(DataServiceContext);
 
     const getMainData = () => { 
-        const promise = dataServiceContext.getFreezer(locationState.user.userId);
+        const promise = dataServiceContext.getFreezer(location.state.uid);
         promise.then((datas) => { 
             const fre = datas[0];
             const sec = datas[1];
@@ -33,7 +34,7 @@ const Freezer = ({ }) => {
             setFreezer(fre[mainFreezerKey]);
             setSections(mainSections)
 
-            mainSections.length > 0 && dataServiceContext.getFoods(locationState.user.userId, setFoods);
+            mainSections.length > 0 && dataServiceContext.getFoods(location.state.uid, setFoods);
         })
     }
 
@@ -42,13 +43,13 @@ const Freezer = ({ }) => {
     } , [])
 
     useEffect(() => { 
-        authServiceContext.checkUserState((user) => { 
-            if (user) { 
-                if (locationState.user.userId !== user.uid) { 
-                    navigate('/', {replace : true})
-                }
-            }
-        })
+        // authServiceContext.checkUserState((user) => { 
+        //     if (user) { 
+        //         if (cookies['uid'] !== user.uid) { 
+        //             navigate('/', {replace : true})
+        //         }
+        //     }
+        // })
     }, [])
     
     return (

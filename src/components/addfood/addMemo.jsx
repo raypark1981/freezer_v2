@@ -1,13 +1,11 @@
 import React, { useRef } from 'react';
-import { useContext, useEffect , useState } from 'react';
+import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { AuthServiceContext } from '../../App';
 import styles from './addMemo.module.css';
 
 const AddMemo = () => { 
     const navigate = useNavigate();
     const location = useLocation();
-    const serviceContext = useContext(AuthServiceContext);
     
     const [state, setState] = useState(location.state);
     const [memo, setMemo] = useState(!!state.food.memo ? state.food.memo : '');
@@ -31,17 +29,6 @@ const AddMemo = () => {
         }
     }
     
-    useEffect(() => { 
-        serviceContext.checkUserState((user) => { 
-            if (user) { 
-                if (state.user.userId !== user.uid) { 
-                    alert('사용자가 없습니다. ')
-                    navigate('/', {replace : true})
-                }
-            }
-        })
-    }, [])
-    console.log(state);
     return (
         <section className={styles.add_memo}>
             <header className={styles.header}>

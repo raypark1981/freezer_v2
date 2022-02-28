@@ -1,6 +1,6 @@
 .app{
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background:no-repeat url('../public/images/app_background.png');
   background-size: 100% 100%;
 }
@@ -71,6 +71,7 @@
     width: 100%;
   }
   .aside{
+    background-color: var(--color-white);
     position: absolute;
     width: 80%;
     top: 0;

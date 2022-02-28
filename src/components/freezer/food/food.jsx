@@ -6,7 +6,6 @@ import uiActionCreator from '../../../actions/uiAction';
 import { DataServiceContext } from '../../../App';
 import styles from './food.module.css';
 
-
 const Food = memo(({ food , sectionKey , onOffSpiner}) => { 
     const dataServiceContext = useContext(DataServiceContext);
     const navigate = useNavigate();
@@ -30,12 +29,7 @@ const Food = memo(({ food , sectionKey , onOffSpiner}) => {
             default:
                 return;
         }
-        console.log({...yn})
         dataServiceContext.updateFood(state.user.userId, sectionKey, { ..._food, ...yn });
-        // callMainData();   
-        // setTimeout(() => { 
-        //     onOffSpiner();
-        // }, 1500)
     }
     const goToPage = (e) => { 
         if (!!e.target.dataset.target) return;
@@ -43,6 +37,12 @@ const Food = memo(({ food , sectionKey , onOffSpiner}) => {
         const key = e.currentTarget.dataset.key;
         navigate(`/addfood/${key}`, { state: { ...state, sectionKey: sectionKey}});
     }
+
+    const handleNoImage = (e) => { 
+        e.target.src = `../../images/foods/${"nofood"}.png`;
+        e.target.onError = null;
+    }
+
     const caculateDatediff = (subject) => { 
         if (!subject) { 
             return "non";
@@ -61,7 +61,7 @@ const Food = memo(({ food , sectionKey , onOffSpiner}) => {
             <div className={styles.outline}>
                 <div className={styles.food} >
                     <div className={styles.img} >
-                        <img src={`../../images/foods/${_food.foodGrp}.png`} alt="" />
+                        <img src={`../../images/foods/${_food.foodGrp}.png`} onError={handleNoImage} alt="" />
                     </div>
                     <div className={styles.info} >
                         <div>

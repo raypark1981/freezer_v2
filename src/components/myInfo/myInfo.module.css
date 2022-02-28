@@ -6,17 +6,16 @@ justify-content: flex-start;
 height: 100%;
 overflow: hidden;
 }
-
 .header{
-    margin-top: 10rem;
+    margin-top: 30%;
 }
 .me_pic{
     text-align: center;
 }
 .me_pic img{
-    width: 3.125rem;
-    height: 3.125rem;
-    outline:.2rem solid var(--color-dark-grey);
+    width: 3.325rem;
+    height: 3.325rem;
+    border:.2rem solid var(--color-dark-grey);
     border-radius: 50%;
 }
 .email{
@@ -67,7 +66,7 @@ overflow: hidden;
     width: 90%;
     /* height: 12rem; */
     margin-top:auto;
-    margin-bottom: 3rem;
+    margin-bottom: 10%;
     display: flex;
     flex-wrap: wrap;
 }

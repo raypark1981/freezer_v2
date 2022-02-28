@@ -5,20 +5,20 @@ import styles from './addFood.module.css';
 import { AuthServiceContext , DataServiceContext } from '../../App';
 import FoodCalendar from '../utils/FoodCalendar/foodCalendar';
 import moment from 'moment';
+import { useCookies } from 'react-cookie';
 
-const AddFood = ({ history }) => { 
+const AddFood = ({  }) => { 
     const { key } = useParams();
+    const refName = useRef();
+    const navigate = useNavigate();
+    const location = useLocation();
     const [food, setFood] = useState({});
+
     const [actInputName, setActInputName] = useState(true);
     const [actKeepCalendar, setActKeepCalendar] = useState(false);
     const [actExpiredCalendar, setActExpiredCalendar] = useState(false);
-    const refName = useRef();
-
-    const navigate = useNavigate();
-    const location = useLocation();
     const dataServiceContext = useContext(DataServiceContext);
-    const authSrviceContext = useContext(AuthServiceContext);
-    const [state , setState] = useState(location.state);
+    const [state, setState] = useState(location.state);
 
     const handleInputName = (e) => {
         if (e.currentTarget.tagName === 'INPUT') { 
@@ -74,15 +74,16 @@ const AddFood = ({ history }) => {
 
                 if (!food.key) {
                     const foodKey = ('fd' + Date.now());
-                    dataServiceContext.setFood(state.user.userId, state.sectionKey, { ...food, key: foodKey });
+                    dataServiceContext.setFood(state['uid'], state.sectionKey, { ...food, key: foodKey });
                 } else { 
-                    dataServiceContext.updateFood(state.user.userId, state.sectionKey, { ...food });
+                    dataServiceContext.updateFood(state['uid'], state.sectionKey, { ...food });
                 }
-                
-                navigate('/freezer', { state: { user: { ...state.user }}})
+
+                navigate('/freezer', { state : {uid : state.uid }})
                 break;
             case 'delete':
-                navigate('/freezer', { state: { user: { ...state.user } } })
+                navigate('/freezer', { state: {uid : state.uid } })
+                
                 break;
             case 'addDetail':
                 navigate('/addDetail', { state: { ...state, food: { ...food } }})
@@ -94,25 +95,13 @@ const AddFood = ({ history }) => {
     }
 
     useEffect(() => { 
-        
         if (!!key) {
-            dataServiceContext.getFoods(state.user.userId, setFood , `${state.sectionKey}/${key}`);
+            dataServiceContext.getFoods(state['uid'], setFood , `${state.sectionKey}/${key}`);
         } else { 
             !!location.state && setFood(!!location.state.food ? location.state.food : {} );
         }
     }, [])
-
-    useEffect(() => { 
-        authSrviceContext.checkUserState((user) => { 
-            if (user) { 
-                if (state.user.userId !== user.uid) { 
-                    alert('사용자가 없습니다. ')
-                    navigate('/', {replace : true})
-                }
-            }
-        })
-    }, [])
-
+console.log(food)
     return (
         <section className={styles.add_food}>
             <header className={styles.header}>
@@ -136,7 +125,7 @@ const AddFood = ({ history }) => {
                 }
                 {
                     !actInputName && <>
-                        <input ref={refName} type="text" className={styles.input_name} placeholder="이름을 입력하세요.." defaultValue={food.foodName} />
+                        <input ref={refName} type="text" className={styles.input_name} onBlur={handleInputName} placeholder="이름을 입력하세요.." defaultValue={food.foodName} />
                         <input type="button" className={styles.btn_save_name} onClick={handleInputName}/>
                     </>
                 }

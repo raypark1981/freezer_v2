@@ -1,13 +1,10 @@
-import React, { useRef, useState } from 'react';
-import { useContext, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { AuthServiceContext } from '../../App';
 import styles from './addDetail.module.css';
 
 const AddDetail = () => { 
     const navigate = useNavigate();
     const location = useLocation();
-    const serviceContext = useContext(AuthServiceContext);    
     const [state, setState] = useState(location.state);
     const [detail, setDetail] = useState(!!state.food.foodDetail ? state.food.foodDetail : '');
 
@@ -45,18 +42,6 @@ const AddDetail = () => {
             }
         })
     }
-
-
-    useEffect(() => { 
-        serviceContext.checkUserState((user) => { 
-            if (user) { 
-                if (state.user.userId !== user.uid) { 
-                    alert('사용자가 없습니다. ')
-                    navigate('/', {replace : true})
-                }
-            }
-        })
-    }, [])
 
     return (
         <section className={styles.add_detail}>
