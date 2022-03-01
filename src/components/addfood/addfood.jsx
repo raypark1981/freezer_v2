@@ -8,7 +8,7 @@ import { getSession } from '../../services/session';
 import { DataServiceContext } from '../../App';
 
 const AddFood = ({  }) => { 
-    const { key } = useParams();
+    const { fz, fd } = useParams();
     const refName = useRef();
     const navigate = useNavigate();
     const location = useLocation();
@@ -79,25 +79,24 @@ const AddFood = ({  }) => {
                 } else { 
                     dataServiceContext.updateFood(getSession('uid'), state.sectionKey, { ...food });
                 }
-
-                navigate('/freezer', { })
+                navigate(`/freezer/${fz}`, { })
                 break;
             case 'delete':
-                navigate('/freezer', { })
+                navigate(`/freezer/${fz}`, { })
                 
                 break;
             case 'addDetail':
-                navigate('/addDetail', { state: { ...state, food: { ...food } }})
+                navigate(`/addDetail/${fz}`, { state: { ...state, food: { ...food } }})
                 break;
             case 'addMemo':
-                navigate('/addMemo', { state: { ...state, food: { ...food } } })
+                navigate(`/addMemo/${fz}`, { state: { ...state, food: { ...food } } })
                 break;
         }
     }
 
     useEffect(() => { 
-        if (!!key) {
-            dataServiceContext.getFoods(getSession('uid'), setFood , `${state.sectionKey}/${key}`);
+        if (!!fd) {
+            dataServiceContext.getFoods(getSession('uid'), setFood , `${state.sectionKey}/${fd}`);
         } else { 
             !!state && setFood(!!state.food ? state.food : {} );
         }

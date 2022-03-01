@@ -53,7 +53,7 @@ const Login = ({ onOffSpiner }) => {
 
             const freezerKey = "fz" + Date.now();
             // 기본 냉장고 
-            dataContext.setFreezers(uid, {
+            dataContext.setFreezer(uid, {
                 "key" : freezerKey , "name": "울집냉장고" ,"mainYN": "Y"
             })
             const sectionKey = "sc" + Date.now();
@@ -72,7 +72,6 @@ const Login = ({ onOffSpiner }) => {
 
     useEffect(() => { 
         clearSession();
-        console.log('clear session');
     } , [])
 
     return(

@@ -8,7 +8,11 @@ const intialState = {
 const uiReducer = (state = intialState, action) => {
   switch (action.type) {
     case TOGGLE_RIGHT_MYINFO:
-      return { ...state, right_myinfo_opened: !state.right_myinfo_opened };
+      let tmp =
+        typeof action.right_myinfo_opened === "boolean"
+          ? action.right_myinfo_opened
+          : !state.right_myinfo_opened;
+      return { ...state, right_myinfo_opened: tmp };
     case ON_OFF_SPINNER:
       return { ...state, spiner_on_off: !state.spiner_on_off };
     default:

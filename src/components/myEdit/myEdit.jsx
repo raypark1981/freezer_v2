@@ -1,16 +1,21 @@
-import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthServiceContext, DataServiceContext } from '../../App';
+import { clearSession, getSession } from '../../services/session';
+
 import styles from './myEdit.module.css';
 
-const MyEdit = ({ }) => { 
+const MyEdit = ({ }) => {
     
+    const dataServiceContext = useContext(DataServiceContext);
+    const authServiceContext = useContext(AuthServiceContext);
     const navigate = useNavigate();
-    const location = useLocation();
-    const [state, setState] = useState(location.state);
+    const [myInfo, setMyInfo] = useState();
+    const [myFreezer, setMyFreezer] = useState({});
     
-    const goToPage = (e) => { 
+    const goToPage = (e) => {
         const target = e.currentTarget.dataset.target;
-        switch (target) { 
+        switch (target) {
             case 'save':
                 navigate('/freezer', {})
                 break;
@@ -21,8 +26,19 @@ const MyEdit = ({ }) => {
         }
     }
 
+    const signOut = useCallback(() => {
+        authServiceContext.signOut().then((d) => {
+            console.log('sign out')
+            clearSession();
+        }).catch((error) => {
+            console.log(error)
+        })
+    }, [authServiceContext]);
 
-
+    useEffect(() => {
+        dataServiceContext.getUserInfo(getSession('uid'), setMyInfo);
+        dataServiceContext.getFreezer(getSession('uid'), setMyFreezer);
+    }, [])
 
     return (
         <section className={styles.my_edit}>
@@ -36,7 +52,7 @@ const MyEdit = ({ }) => {
                 </div>
             </header>
             <h3 className={styles.email}>
-                "작업이메일"
+                {myInfo?.email}
             </h3>
             <div className={styles.block} onClick={goToPage} data-target="addDetail" >
                 <ul>
@@ -46,7 +62,7 @@ const MyEdit = ({ }) => {
                         </div>
                         <div className={styles.info}>
                             <div className={styles.info_title}>이름</div>
-                            <div className={styles.info_value}>작업중..</div>
+                            <div className={styles.info_value}>{myInfo?.name}</div>
                         </div>
                     </li>
                     <li className={styles.info_box}>
@@ -55,7 +71,12 @@ const MyEdit = ({ }) => {
                         </div>
                         <div className={styles.info}>
                             <div className={styles.info_title}>보유냉장고</div>
-                            <div className={styles.info_value}>넣어라</div>
+                            <div className={styles.info_value}>{
+                                Object.keys(myFreezer).length > 0  && Object.keys(myFreezer).map((key) => { 
+                                    return <Link  key={myFreezer[key].key} to={`/freezer/${myFreezer[key].key}`}><div>{myFreezer[key].name}</div></Link> 
+                                })
+                            }
+                            </div>
                         </div>
                     </li>
                     <li className={styles.info_box}>
@@ -71,7 +92,7 @@ const MyEdit = ({ }) => {
             </div>
 
             <div className={styles.block}>
-                <button className={ styles.logout}>로그아웃</button>
+                <button className={styles.logout} onClick={ signOut}>로그아웃</button>
             </div>
         </section>
     )

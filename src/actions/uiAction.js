@@ -1,9 +1,10 @@
 export const TOGGLE_RIGHT_MYINFO = "TOGGLE_RIGHT_MYINFO";
 export const ON_OFF_SPINNER = "ON_OFF_SPINNER";
 
-const toggleRightMyInfo = () => {
+const toggleRightMyInfo = (right_myinfo_opened) => {
   return {
     type: TOGGLE_RIGHT_MYINFO,
+    right_myinfo_opened,
   };
 };
 const onOffSpiner = () => {

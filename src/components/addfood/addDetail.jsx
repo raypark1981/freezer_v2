@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styles from './addDetail.module.css';
 
 const AddDetail = () => { 
     const navigate = useNavigate();
     const location = useLocation();
+    const { fz, fd } = useParams();
     const [state, setState] = useState(location.state);
     const [detail, setDetail] = useState(!!state.food.foodDetail ? state.food.foodDetail : '');
 
@@ -12,7 +13,7 @@ const AddDetail = () => {
         const target = e.currentTarget.dataset.target;
         switch (target) { 
             case 'addFood':
-                navigate("/addFood", {
+                navigate(`/addFood/${fz}`, {
                     state: {
                         ...state,
                         food: {

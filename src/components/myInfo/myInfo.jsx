@@ -1,15 +1,23 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 
 import { Link, useLocation } from 'react-router-dom';
+import uiActionCreator from '../../actions/uiAction';
 import { AuthServiceContext } from '../../App';
+import { getSession } from '../../services/session';
 import styles from './myInfo.module.css'
-const MyInfo = ({}) => { 
+const MyInfo = ({toggle}) => { 
     const [user, setUser] = useState(null);
     const authServiceContext = useContext(AuthServiceContext);
+    const handleClick = () => { 
+        toggle();
+    }
 
     useEffect(() => { 
+        if (!getSession('uid')) return;
+
         authServiceContext.checkUserState((user) => { 
-            setUser({ email: user.email , photoURL : user.photoURL })
+            user && setUser({ email: user.email , photoURL : user.photoURL })
         })
     } , [])
 
@@ -37,33 +45,33 @@ const MyInfo = ({}) => {
         
     {user && <div className={styles.actions}>
         <div className={`${styles.action} ${styles.my_edit} ${styles.line_right}`}>
-            <Link to="/myEdit">
+            <Link to="/myEdit" onClick={handleClick}>
                 <i></i>
-                <button>정보수정</button>
+                <button>회원정보</button>
             </Link>
         </div>
             <div className={`${styles.action} ${styles.my_ref} ${styles.line_right}`}>
-            <Link to="/myFreezer">
+            <Link to="/myFreezer" onClick={handleClick}>
                 <i></i>
                 <button>내 냉장고</button>
             </Link>
         </div>
             <div className={`${styles.action} ${styles.my_basket}`}>
-            <Link to="/myBasket">
+            <Link to="/myBasket"  onClick={handleClick}>
                 <i></i>
                 <button>장바구니</button>
             </Link>
         </div>
             <div className={`${styles.action} ${styles.my_recipe}  ${styles.line_top} ${styles.line_right}`}>
-            <Link to="/recipe">
+            <Link to="/recipe"  onClick={handleClick}>
                 <i></i>
                 <button>추천레시피</button>
             </Link>
         </div>
             <div className={`${styles.action} ${styles.my_notice} ${styles.line_top} ${styles.line_right}`}>
-            <Link to="/notice">
-            <i></i>
-            <button>공지사항</button>
+            <Link to="/notice"  onClick={handleClick}>
+                <i></i>
+                <button>공지사항</button>
             </Link>
         </div>
             <div className={`${styles.action} ${styles.my_ask} ${styles.line_top}`}>
@@ -77,4 +85,10 @@ const MyInfo = ({}) => {
 </section>)
 }
 
-export default MyInfo;
+const mapDispatchToProps = (dispatch) => { 
+    return {
+        toggle: () => dispatch(uiActionCreator.toggleRightMyInfo(false)) 
+    }
+}
+
+export default connect(null , mapDispatchToProps)(MyInfo);

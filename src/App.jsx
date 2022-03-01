@@ -37,6 +37,12 @@ const App = ({ authService, dataService , opened, toggle , spinerOnOff }) => {
   
 
   useEffect((e, t) => { 
+    if (!getSession('uid')) { 
+      return () => { 
+        console.log('im dying');
+      }
+    }
+
     if (location.pathname !== "/") { 
       authService.checkUserState((user) => { 
         try {
@@ -44,13 +50,17 @@ const App = ({ authService, dataService , opened, toggle , spinerOnOff }) => {
             if (getSession('uid') !== user.uid) {
               navigate('/', { replace: true })
             }
+          } else { 
+            // 임시 수정해야됨
+            navigate('/', { replace: true });
           }
         } catch (e) { 
-          alert('접근 에러..')
+          console.log('접근 에러..')
           navigate('/', { replace: true });
         }
       })
     }
+   
   }, [location])
 
   return (
@@ -63,12 +73,20 @@ const App = ({ authService, dataService , opened, toggle , spinerOnOff }) => {
               <div className={styles.main} ref={nodeRef}>
               <Routes location={location}>
                   <Route path="/" element={<Login/>} />
-                  <Route path="/freezer" element={<Freezer />} />
-                  <Route path="/addFood" element={<AddFood />} >
-                    <Route path=":key" element={<AddFood />} />
+                  <Route path="/freezer" element={<Freezer />} >
+                      <Route path=":fz" element={<Freezer />} />  
+                      <Route path=":fz/:fd" element={<Freezer />} />  
                   </Route>
-                  <Route path="/addDetail" element={<AddDetail />} />
-                  <Route path="/addMemo" element={<AddMemo />} />
+                  <Route path="/addFood" element={<AddFood />} >
+                      <Route path=":fz" element={<AddFood />} />  
+                      <Route path=":fz/:fd" element={<AddFood />} />  
+                  </Route>
+                  <Route path="/addDetail" element={<AddDetail />} >
+                    <Route path=":fz" element={<AddDetail />} />  
+                  </Route>
+                  <Route path="/addMemo" element={<AddMemo />} >
+                    <Route path=":fz" element={<AddMemo />} />  
+                  </Route>
                   <Route path="/myEdit" element={<MyEdit />} />
                   <Route path="/myFreezer" element={<MyFreezer />} />
                   <Route path="/myBasket" element={<MyBasket />} />

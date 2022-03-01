@@ -5,6 +5,7 @@ import {
   GoogleAuthProvider,
   onAuthStateChanged,
   FacebookAuthProvider,
+  signOut,
 } from "firebase/auth";
 
 import {
@@ -15,6 +16,8 @@ import {
   get,
   update,
   push,
+  remove,
+  // collection,
 } from "firebase/database";
 
 const firebaseConfig = {
@@ -32,6 +35,7 @@ const db = getDatabase();
 
 export {
   signInWithPopup,
+  signOut,
   auth,
   providerFacebook,
   providerGoogle,
@@ -40,6 +44,7 @@ export {
   set,
   get,
   update,
+  remove,
   push,
   db,
   child,

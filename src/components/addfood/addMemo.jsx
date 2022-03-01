@@ -1,12 +1,12 @@
 import React, { useRef } from 'react';
 import { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styles from './addMemo.module.css';
 
 const AddMemo = () => { 
     const navigate = useNavigate();
     const location = useLocation();
-    
+    const { fz, fd } = useParams();
     const [state, setState] = useState(location.state);
     const [memo, setMemo] = useState(!!state.food.memo ? state.food.memo : '');
     const refMemo = useRef();
@@ -15,7 +15,7 @@ const AddMemo = () => {
         const target = e.currentTarget.dataset.target;
         switch (target) { 
             case 'back':
-                navigate("/addFood", {
+                navigate(`/addFood/${fz}`, {
                     state: {
                         ...state,
                         food: {

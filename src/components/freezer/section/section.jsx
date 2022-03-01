@@ -2,12 +2,12 @@ import React from 'react';
 import styles from './section.module.css';
 import Food from '../food/food';
 import { useLocation, useNavigate } from 'react-router-dom';
-const Section = ({ section, foods }) => {
+const Section = ({ freezerkey,  section, foods }) => {
     const navigate = useNavigate();
     const location = useLocation();
 
     const handleClick = (e) => {
-        navigate("/addfood", { state: { ...location.state, sectionKey: e.currentTarget.dataset.section }});
+        navigate(`/addfood/${freezerkey}`, { state: { ...location.state, sectionKey: e.currentTarget.dataset.section }});
     }
 
     return (
@@ -28,7 +28,7 @@ const Section = ({ section, foods }) => {
             <ul>
                 {
                     !!foods && Object.keys(foods).map(key => { 
-                        return <Food key={key} food={foods[key]} sectionKey={section.key}/>
+                        return <Food key={key} freezerkey={freezerkey} sectionKey={section.key} food={foods[key]} />
                     })
                 }
                 

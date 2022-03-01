@@ -4,11 +4,16 @@ import {
   onAuthStateChanged,
   providerGoogle,
   signInWithPopup,
+  signOut,
 } from "./firebase";
 
 export default class AuthService {
   signIn = async (type) => {
     return await signInWithPopup(auth, this.getProvider(type));
+  };
+
+  signOut = (callback) => {
+    return signOut(auth);
   };
 
   checkUserState = (callback) => {

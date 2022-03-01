@@ -15,7 +15,11 @@
 
 *{box-sizing: border-box;margin:0;padding:0;}
 ul{list-style-type: none;}
+html , #root{
+  height: 100%;
+}
 body {
+  height: 100%;
   margin: 0;
   font-family:'Nanum Gothic', sans-serif;
   -webkit-font-smoothing: antialiased;
