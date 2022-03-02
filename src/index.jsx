@@ -22,7 +22,7 @@ store.subscribe(() => {
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
+    <BrowserRouter basename='/'>
       <React.StrictMode>
       <App authService={authService} foodService={foodService} dataService={dataService}/>
       </React.StrictMode>
