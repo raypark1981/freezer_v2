@@ -51,7 +51,7 @@
           //     .split("/")
           //     .slice(0, 1 + segmentCount)
           //     .join("/") +
-          "/?p=/" +
+          "/?p=" +
           l.pathname.replace(/&/g, "~and~") +
           (l.search ? "&q=" + l.search.slice(1).replace(/&/g, "~and~") : "") +
           l.hash
