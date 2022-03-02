@@ -58,9 +58,13 @@ const Login = ({ onOffSpiner }) => {
             })
             const sectionKey = "sc" + Date.now();
              // 기본 Section 
-             dataContext.setSections(uid, freezerKey,  [{
+            dataContext.setSections(uid, freezerKey,  [{
                 "key" : sectionKey , "name": "신선칸" , "order" : 1
             }])
+            const basketKey = "ba" + Date.now();
+            dataContext.setBasket(uid,basketKey,  {
+                "name": "냉장고에서 장바구니를 추가해보세요!"
+            })
 
             setSession('uid', uid);
             navigate("./freezer", { replace: true });

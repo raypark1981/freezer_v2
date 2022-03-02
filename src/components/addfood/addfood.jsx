@@ -32,15 +32,16 @@ const AddFood = ({  }) => {
     }
 
     const handleSelected = useCallback((value, target) => {
+        const date = moment(value).format("YYYY-MM-DD");
         if ('keep' === target) {
             setFood((food) => ({
                 ...food,
-                insertedDate: value
+                insertedDate: date
             }))
         } else {
             setFood((food) => ({
                 ...food,
-                expiredDate: value
+                expiredDate: date
             }))
         }
     }, []);
@@ -72,7 +73,6 @@ const AddFood = ({  }) => {
                     alert('푸드 이름이 필요합니다.');
                     return;
                 }
-
                 if (!food.key) {
                     const foodKey = ('fd' + Date.now());
                     dataServiceContext.setFood(getSession('uid'), state.sectionKey, { ...food, key: foodKey });
@@ -145,18 +145,22 @@ const AddFood = ({  }) => {
                         </div>
                     </div>
                     <div className={styles.calendar_holder}>
-                        <FoodCalendar active={actKeepCalendar} selected={handleSelected} setValueTarget={"keep"}/>
+                        {
+                            <FoodCalendar date={typeof food.insertedDate === 'string' ? new Date(food.insertedDate) : food.insertedDate} active={actKeepCalendar} selected={handleSelected} setValueTarget={"keep"} />
+                        }
                     </div>
                     <div data-type="expired" onClick={handleDateClick}>
                         <div className={styles.expired_title}>
                         소비기한
                         </div>
                         <div className={styles.expired_date}>
-                            {food.expiredDate && moment(food.expiredDate).format("YYYY년 MM월 DD일")}
+                            {food.expiredDate && moment(new Date(food.expiredDate)).format("YYYY년 MM월 DD일")}
                         </div>
                     </div>
                     <div className={styles.calendar_holder}>
-                        <FoodCalendar active={actExpiredCalendar} selected={handleSelected} setValueTarget={"expired"}/>
+                        {
+                            <FoodCalendar date={typeof food.expiredDate === 'string' ?new Date(food.expiredDate): food.expiredDate} active={actExpiredCalendar} selected={handleSelected} setValueTarget={"expired"} />
+                        }
                     </div>
                 </div>
             </div>

@@ -16,10 +16,9 @@ const Notice = ({}) => {
   return (
     <section className={styles.my_notice}>
         <header className={styles.header}>
-            
             <h3 className={`${styles.middle} ${styles.align_center}` }>장바구니</h3>
             <div className={styles.right}>
-                <button data-target="back" className={styles.right} onClick={goToPage}></button>
+                <button data-target="back" onClick={goToPage}></button>
             </div>
         </header>
         <div className={styles.block} >

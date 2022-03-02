@@ -6,23 +6,23 @@ import './foodCalendar.css'
 
 
 
-const FoodCalendar = ({active , selected , setValueTarget}) => { 
-    const [value, onChange] = useState(new Date());
-    const handleChange = (value, event) => { 
+const FoodCalendar = ({ date, active, selected, setValueTarget }) => { 
+
+    const handleChange = (value, event) => {
         selected(value, setValueTarget);
-        onChange(value)
     }
     const formatDay = (locale, date) => { 
         return new Date(date).getDate();
     }
-    
+
     return (<Calendar
         className={`${"custom_calendar"} ${!!active ? 'active' : ''}`}
         calendarType="US"
         formatDay={formatDay}
         locale="ko"
         onChange={handleChange}
-        value={value} />)
+        value={date}
+    />)
 }
 
 export default React.memo(FoodCalendar);

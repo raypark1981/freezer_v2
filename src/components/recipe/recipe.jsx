@@ -14,32 +14,16 @@ const Recipe = ({}) => {
       case "save":
         navigate("/freezer", {});
         break;
-      case "delete":
-        navigate("/freezer", {});
-        break;
     }
   };
 
   return (
     <section className={styles.my_freezer}>
       <header className={styles.header}>
-        <div>
-          <button
-            data-target='delete'
-            className={styles.left}
-            onClick={goToPage}
-          ></button>
-        </div>
-        <h3 className={`${styles.middle} ${styles.align_center}`}>
-          추천레시피
-        </h3>
-        <div>
-          <button
-            data-target='save'
-            className={styles.right}
-            onClick={goToPage}
-          ></button>
-        </div>
+          <h3 className={`${styles.middle} ${styles.align_center}` }>추천 레시피</h3>
+          <div className={styles.right}>
+              <button data-target="save" onClick={goToPage}></button>
+          </div>
       </header>
       <div
         className={styles.block}

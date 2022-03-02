@@ -10,6 +10,7 @@
     padding: 0.5rem 0;
     background-color: var(--color-white);
     position: relative;
+    border-bottom: 1px solid var(--color-middle-grey);
 }
 .middle{
     letter-spacing: .1rem;
@@ -20,13 +21,12 @@
 }
 .right{
     position:absolute;
-    top: 0.8125rem;
     right: 0;
 }
 .right button{
     width: 1.5625rem;
     height: 1.5625rem;
-    background-image: url('../../icon/save.png');
+    background-image: url('../../icon/back.png');
     background-repeat: no-repeat;
     background-color: rgb(254, 201, 114);
     background-position: 50%;
@@ -52,16 +52,51 @@
     display: block;
     margin-right:.5rem
 }
+.rec_icon.checked{
+    background-image: url('../../icon/check.png');
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: 60%;
+}
 .name{
     margin-right: auto;
 }
 
 .btn_edit{
-    background-image: url(../../icon/vertical_dot.png);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-color: transparent;
-    width: 0.8125rem;
-    height: 1.1rem;
+    color:rgb(63, 168, 244);
+    width: 2rem;
+    height: 1.6875rem;
+    padding-left: 1rem;
+}
+.input{
+    flex-grow: 1;
     border:0;
+    border-bottom: 1px solid var(--color-middle-grey);
+    line-height: 1.3rem;
+}
+.section_add{
+    bottom: 7%;
+    right: 8%;
+    position: absolute;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    flex-direction: column;
+    z-index: 10;
+}
+.btn_add{
+    background: no-repeat url('../../icon/plus_white.png');
+    background-size: 50%;
+    background-position: 50%;
+    border:0;
+    background-color: var(--color-main-yellow);
+    border-radius: 50%;
+    width: 3.5rem;
+    height: 3.5rem;
+    box-shadow: 0 10px 15px -7px rgb(0 0 0 / 20%);
+    -webkit-transition: -webkit-transform .5s;
+    transition: -webkit-transform .5s;
+    transition: transform .5s;
+    transition: transform .5s, -webkit-transform .5s;
+    -webkit-tap-highlight-color: transparent;
 }

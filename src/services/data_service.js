@@ -15,8 +15,19 @@ class DataService {
 
   deleteFreezer = (userId, freezerkey) => {
     if (!userId) return;
-    console.log(freezerkey);
-    // set(ref(db, `${userId}/freezers/${freezerkey}`));
+    remove(ref(db, `${userId}/freezers/${freezerkey}`));
+    const dbRef = ref(db);
+    get(child(dbRef, `${userId}/sections/`)).then((snapshot) => {
+      if (snapshot.exists()) {
+        const sections = snapshot.val();
+        const section = sections[freezerkey];
+
+        section &&
+          section.map((sec, i) => {
+            this.deleteSection(userId, freezerkey, i, sec.key);
+          });
+      }
+    });
   };
 
   setSections = (userId, freezerkey, section) => {
@@ -34,8 +45,7 @@ class DataService {
 
   deleteSection = (userId, freezerkey, index, sectionKey) => {
     if (!userId) return;
-    console.log(`${userId}/sections/${freezerkey}/${index}/${sectionKey}`);
-    remove(ref(db, `${userId}/sections/${freezerkey}/${index}/${sectionKey}`));
+    remove(ref(db, `${userId}/sections/${freezerkey}/${index}`));
     remove(ref(db, `${userId}/foods/${sectionKey}`));
   };
 
@@ -51,15 +61,47 @@ class DataService {
     const value = update(ref(db), updates);
   };
 
+  updateFoodBasket = (userId, sectionkey, foodKey, basketYN) => {
+    if (!userId) return;
+    const updates = {};
+    updates[`${userId}/foods/${sectionkey}/${foodKey}/basketYN`] = basketYN;
+    const value = update(ref(db), updates);
+  };
+
+  updateBasket = (userId, basketkey, basket) => {
+    if (!userId) return;
+    const updates = {};
+    updates[`${userId}/baskets/${basketkey}`] = basket;
+    const value = update(ref(db), updates);
+  };
+
+  getBasket = (userId, setBasket) => {
+    const dbRef = ref(db);
+    get(child(dbRef, `${userId}/baskets/`)).then((snapshot) => {
+      if (snapshot.exists()) {
+        setBasket(snapshot.val());
+      }
+    });
+  };
   setUserInfo = (userId, userInfo) => {
     if (!userId) return;
     set(ref(db, `${userId}/userInfo/`), userInfo);
   };
 
-  getFoods = (userId, setFood, foodkey = "") => {
+  setBasket = (userId, basketkey, basket) => {
+    if (!userId) return;
+    set(ref(db, `${userId}/baskets/${basketkey}`), basket);
+  };
+
+  deleteBasket = (userId, basketkey) => {
+    if (!userId) return;
+    remove(ref(db, `${userId}/baskets/${basketkey}`));
+  };
+
+  getFoods = (userId, setFood, foodUrl = "") => {
     if (!userId) return;
     const dbRef = ref(db);
-    get(child(dbRef, `${userId}/foods/${foodkey}`)).then((snapshot) => {
+    get(child(dbRef, `${userId}/foods/${foodUrl}`)).then((snapshot) => {
       if (snapshot.exists()) {
         setFood(snapshot.val());
       } else {

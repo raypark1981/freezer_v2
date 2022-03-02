@@ -3,12 +3,12 @@ import Header from '../header/header';
 import Section from './section/section';
 import styles from './freezer.module.css';
 
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { DataServiceContext } from '../../App';
 import { getSession } from '../../services/session';
 
 const Freezer = ({ }) => { 
-    const { fz , fd } = useParams();
+    const { fz, fd } = useParams();
     const [freezer, setFreezer] = useState({});
     const [sections, setSections] = useState([]);
     const [foods, setFoods] = useState({});   
@@ -35,7 +35,7 @@ const Freezer = ({ }) => {
             setFreezer(fre[_mainFreezerKey]);
             setSections(mainSections)
             setMainFreezerKey(_mainFreezerKey);
-            mainSections.length > 0 && dataServiceContext.getFoods(getSession('uid'), setFoods);
+            mainSections && mainSections.length > 0 && dataServiceContext.getFoods(getSession('uid'), setFoods);
         })
     }
 
@@ -43,7 +43,6 @@ const Freezer = ({ }) => {
         if (!getSession('uid')) return;
         getMainData();
     } , [])
-    
     return (
     <>
         <Header />
@@ -51,7 +50,7 @@ const Freezer = ({ }) => {
         <main>
             <section className={styles.freezer}>
             {
-                sections.length > 0 && sections.map((section) => { 
+                sections && sections.length > 0 && sections.map((section) => { 
                     return <Section key={section.key} freezerkey={mainFreezerKey} section={section} foods={foods[section.key]} />
                 })   
             }   
