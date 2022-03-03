@@ -18,14 +18,14 @@
 .middle{
     width: 40%;
     height: 100%;
-
 }
 .middle i{
     display: block;
     background: no-repeat url('../../icon/title.png');
     background-size: contain;
-    width: 100%;
+    width: 93%;
     height: 100%;
+    margin-left: auto;
 }
 .right{
     height: 100%;
