@@ -1,6 +1,7 @@
 import React, {useContext, useEffect , useState} from 'react';
 import Header from '../header/header';
 import Section from './section/section';
+import Food from '../freezer/food/food';
 import styles from './freezer.module.css';
 
 import { useNavigate, useParams } from 'react-router-dom';
@@ -49,11 +50,22 @@ const Freezer = ({ }) => {
     <>
         <Header />
             <h3 className={styles.freezer_name}><i></i>{freezer.name}</h3>
-        <main>
+        <main className={styles.main}>
             <section className={styles.freezer}>
             {
-                sections && sections.length > 0 && sections.map((section) => { 
-                    return <Section key={section.key} freezerkey={mainFreezerKey} section={section} foods={foods[section.key]} />
+                    
+                sections && sections.length > 0 && sections.map((section) => {       
+                    return <React.Fragment key={section.key}>
+                        <Section freezerkey={mainFreezerKey} section={section} foods={foods[section.key]} />
+                        <ul className={styles.food_section}>
+                            {
+                                !!foods[section.key] && Object.keys(foods[section.key]).map(key => { 
+                                    return <Food key={key} freezerkey={mainFreezerKey} sectionKey={section.key} food={foods[section.key][key]} />
+                                })
+                            }
+                            
+                        </ul>
+                    </React.Fragment>
                 })   
             }   
             </section>

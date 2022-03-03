@@ -7,17 +7,29 @@
 
 .app_body{
   position: relative;
-  max-width: 60rem;
   height: 100%;
+  max-width: 60rem;
   display: flex;
   margin:auto;
   background-color: var(--color-white);
 }
 .main{
-
   width: 60%;
   height: 100%;
+  overflow-y: scroll;
 }
+
+.main::-webkit-scrollbar {
+  width: 0px;
+}
+.main::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+.main::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+}
+
 .aside{
   width: 40%;
   height: 100%;
@@ -70,6 +82,7 @@
   .main{
     width: 100%;
   }
+
   .aside{
     background-color: var(--color-white);
     position: absolute;
@@ -80,6 +93,7 @@
   }
   .aside.active{
     /* 100% - .aside : width */
+    z-index: 2;
     left: 20%;
   }
   .spiner.active{

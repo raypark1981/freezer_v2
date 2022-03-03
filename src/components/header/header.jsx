@@ -12,7 +12,7 @@ const Header = ({ opened , toggleRightMyInfo }) => {
     }
 
     return (
-        <header>
+        <header className={styles.header}>
             <div className={styles.container}>
                 <div className={styles.left}></div>
                 <div className={styles.title}><i></i></div>

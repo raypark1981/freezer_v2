@@ -7,7 +7,7 @@ height: 100%;
 overflow: hidden;
 }
 .header{
-    margin-top: 30%;
+    margin-top: 20%;
 }
 .me_pic{
     text-align: center;
@@ -38,27 +38,26 @@ overflow: hidden;
 .count{
     margin-top:1rem;
     text-align: center;
-    font-weight: bold;
     color:var(--color-dark-grey);
 }
 .warning i{
     display: block;
-    width: 50px;
-    height: 50px;
+    width: 2.125rem;
+    height: 2.125rem;
     background: no-repeat url('../../icon/warning_off.png');
     background-size: contain;
 }
 .recipe i{
     display: block;
-    width: 48px;
-    height: 48px;
+    width: 2rem;
+    height: 2rem;
     background: no-repeat url('../../icon/recipe_off.png');
     background-size: contain;
 }
 .basket i{
     display: block;
-    width: 48px;
-    height: 48px;
+    width: 2rem;
+    height: 2rem;
     background: no-repeat url('../../icon/basket_off.png');
     background-size: contain;
 }

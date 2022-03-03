@@ -1,3 +1,7 @@
+.main{
+    /* 100% - header.header + freezer.freezer_name */
+    height: calc(100% - (4.75rem + 2.1875rem));
+}
 .freezer{
     display: flex;
     flex-direction:column;

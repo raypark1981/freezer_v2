@@ -3,7 +3,7 @@
   --color-main-text:#000000;
   --color-white:#ffffff;
   --color-light-grey:#f1f1f5;
-  --color-middle-grey:rgb(216, 216, 216);
+  --color-middle-grey:rgb(191, 191, 191);
   --color-dark-grey:#4a4a4b;
 
   --font-size-big:2rem;
@@ -11,6 +11,9 @@
   --font-size-regular: 1rem;
   --font-size-small:.8rem;
   --font-size-micro:.5rem;
+
+  --height-header:4.75rem;
+  --height-each-section:3.25rem;
 }
 
 *{box-sizing: border-box;margin:0;padding:0;}
