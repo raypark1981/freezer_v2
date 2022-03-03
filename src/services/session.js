@@ -1,12 +1,16 @@
 const mySession = window.sessionStorage;
 
-export const getSession = (key) => {
-  return mySession.getItem(key);
+export const getSession = (key, defaultValue) => {
+  try {
+    return JSON.parse(mySession.getItem(key)) || defaultValue;
+  } catch {
+    return mySession.getItem(key);
+  }
 };
 
 export const setSession = (key, value) => {
   if (typeof value === "object") {
-    mySession.setItem(JSON.stringify(value));
+    mySession.setItem(key, JSON.stringify(value));
   } else {
     return mySession.setItem(key, value);
   }

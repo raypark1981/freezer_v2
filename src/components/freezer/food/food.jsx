@@ -1,21 +1,17 @@
 import moment from 'moment';
 import React, { memo, useContext, useState } from 'react';
 import { connect } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import uiActionCreator from '../../../actions/uiAction';
 import { DataServiceContext } from '../../../App';
-import { getSession } from '../../../services/session';
+import { getSession, setSession } from '../../../services/session';
 import styles from './food.module.css';
 
 const Food = memo(({ freezerkey, sectionKey, food }) => { 
     const dataServiceContext = useContext(DataServiceContext);
     const navigate = useNavigate();
-    const location = useLocation();
-    const [state, setState] = useState(location.state);
-
     const [_food, setFood] = useState(food);
     const handleButton = (e) => {
-        
         const target = e.target.dataset.target;
         const yn = {};
         switch (target) {
@@ -30,13 +26,15 @@ const Food = memo(({ freezerkey, sectionKey, food }) => {
             default:
                 return;
         }
+        
         dataServiceContext.updateFood(getSession("uid"), sectionKey, { ..._food, ...yn });
     }
     const goToPage = (e) => { 
         if (!!e.target.dataset.target) return;
 
         const foodkey = e.currentTarget.dataset.key;
-        navigate(`/addfood/${freezerkey}/${foodkey}`, { state: { ...state, sectionKey: sectionKey}});
+        navigate(`/addfood/${freezerkey}/${foodkey}`);
+        setSession('sectionKey',sectionKey);
     }
 
     const handleNoImage = (e) => { 

@@ -1,13 +1,13 @@
 import React from 'react';
 import styles from './section.module.css';
 import Food from '../food/food';
-import { useLocation, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
+import { setSession } from '../../../services/session';
 const Section = ({ freezerkey,  section, foods }) => {
     const navigate = useNavigate();
-    const location = useLocation();
-
     const handleClick = (e) => {
-        navigate(`/addfood/${freezerkey}`, { state: { ...location.state, sectionKey: e.currentTarget.dataset.section }});
+        navigate(`/addfood/${freezerkey}`);
+        setSession('sectionKey', e.currentTarget.dataset.section);
     }
 
     return (

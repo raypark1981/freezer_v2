@@ -1,44 +1,42 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { getSession, setSession } from '../../services/session';
 import styles from './addDetail.module.css';
 
-const AddDetail = () => { 
+const AddDetail = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { fz, fd } = useParams();
-    const [state, setState] = useState(location.state);
-    const [detail, setDetail] = useState(!!state.food.foodDetail ? state.food.foodDetail : '');
+    const [tmpFood, setTmpFood] = useState(getSession('tmpFood', {}));
+    const [detail, setDetail] = useState(!!tmpFood.food.foodDetail ? tmpFood.food.foodDetail : '');
 
-    const goToPage = (e) => { 
+    const goToPage = (e) => {
         const target = e.currentTarget.dataset.target;
-        switch (target) { 
+        switch (target) {
             case 'addFood':
-                navigate(`/addFood/${fz}`, {
-                    state: {
-                        ...state,
-                        food: {
-                            ...state.food,
-                            foodDetail: detail
-                        }
-                    }
-                });
-                
+                navigate(`/addFood/${fz}`);
+                setSession('tmpFood',{
+                    food: {
+                        ...tmpFood.food,
+                        foodDetail: detail
+                    }   
+                })
                 break;
         }
     }
 
-    const handleKeypad= (e) => { 
-        
-        setDetail((value) => { 
-            
-            switch (e.target.dataset.value) { 
+    const handleKeypad= (e) => {
+
+        setDetail((value) => {
+
+            switch (e.target.dataset.value) {
                 case 'hide':
                     return value + ' ';
                 case 'space':
                     return value + ' ';
                 case 'back':
                     return value.substr(0, value.length - 1);
-                default: 
+                default:
                     return value += e.target.dataset.value;
             }
         })
@@ -48,7 +46,7 @@ const AddDetail = () => {
         <section className={styles.add_detail}>
             <header className={styles.header}>
                 <div>
-                    
+
                 </div>
                 <h3 className={`${styles.middle} ${styles.align_center}` }>세부사항</h3>
                 <div className={styles.right_holder}>
@@ -105,7 +103,7 @@ const AddDetail = () => {
                         </div>
                     </div>
             </div>
-            
+
         </section>
     )
 }

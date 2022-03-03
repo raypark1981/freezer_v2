@@ -2,28 +2,26 @@ import React, { useRef } from 'react';
 import { useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styles from './addMemo.module.css';
-
+import { getSession, setSession } from '../../services/session';
 const AddMemo = () => { 
     const navigate = useNavigate();
-    const location = useLocation();
     const { fz, fd } = useParams();
-    const [state, setState] = useState(location.state);
-    const [memo, setMemo] = useState(!!state.food.memo ? state.food.memo : '');
+    const [tmpFood, setTmpFood] = useState(getSession('tmpFood', {}));
+    const [memo, setMemo] = useState(!!tmpFood.food.memo ? tmpFood.food.memo : '');
     const refMemo = useRef();
 
     const goToPage = (e) => { 
         const target = e.currentTarget.dataset.target;
         switch (target) { 
             case 'back':
-                navigate(`/addFood/${fz}`, {
-                    state: {
-                        ...state,
-                        food: {
-                            ...state.food,
-                            memo: refMemo.current.value
-                        }
+                navigate(`/addFood/${fz}`);
+                setSession('tmpFood',{
+                    food: {
+                        ...tmpFood.food,
+                        memo: refMemo.current.value
                     }
-                });
+                })
+
                 
                 break;
         }

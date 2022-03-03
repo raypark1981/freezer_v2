@@ -5,7 +5,7 @@ import styles from './freezer.module.css';
 
 import { useNavigate, useParams } from 'react-router-dom';
 import { DataServiceContext } from '../../App';
-import { getSession } from '../../services/session';
+import { getSession, removeSession } from '../../services/session';
 
 const Freezer = ({ }) => { 
     const { fz, fd } = useParams();
@@ -42,6 +42,8 @@ const Freezer = ({ }) => {
     useEffect(() => {
         if (!getSession('uid')) return;
         getMainData();
+        removeSession('tmpFood');
+        removeSession('sectionKey');
     } , [])
     return (
     <>
