@@ -23,7 +23,12 @@ const MyBasket = ({ }) => {
     }
 
     const getFoods = () => { 
-        dataServiceContext.getFoods(getSession('uid'), setFoods);
+        dataServiceContext.getFoods(getSession('uid')).then((snapshot) => { 
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                setFoods(data);
+            }
+        });
     }
 
     const getBasket = () => { 

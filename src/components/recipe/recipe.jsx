@@ -98,15 +98,18 @@ const Recipe = ({ }) => {
     getRecipes('hot');
 
     const temp = [];
-    dataServiceContext.getFoods(getSession('uid'), (data) => {
-      Object.keys(data).map(key => {
-        const food = data[key];
-        Object.keys(food).map(_key => {
-          !!food[_key].recipeYN && temp.push(food[_key].foodName);
-        })
-      });
-      
-      setCookIngredient(temp);
+    dataServiceContext.getFoods(getSession('uid')).then((snapshot) => {
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        Object.keys(data).map(key => {
+          const food = data[key];
+          Object.keys(food).map(_key => {
+            !!food[_key].recipeYN && temp.push(food[_key].foodName);
+          })
+        });
+        
+        setCookIngredient(temp);
+      }
     });
   
     // getRecipes('search');

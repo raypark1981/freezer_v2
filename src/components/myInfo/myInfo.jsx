@@ -1,17 +1,47 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import { Link, useLocation } from 'react-router-dom';
+import { myInfoActionCreator } from '../../actions/myInfo.action';
 import uiActionCreator from '../../actions/uiAction';
-import { AuthServiceContext } from '../../App';
+import { AuthServiceContext , DataServiceContext } from '../../App';
 import { getSession } from '../../services/session';
 import styles from './myInfo.module.css'
 
-const MyInfo = ({ toggle, count }) => { 
+const MyInfo = ({ toggle, count , initialCountBasketRecipeWarning}) => { 
     const [user, setUser] = useState(null);
     const authServiceContext = useContext(AuthServiceContext);
+    const dataServiceContext = useContext(DataServiceContext);
     const handleClick = () => { 
         toggle();
+    }
+
+    const caculateDatediff = (subject) => { 
+        if (!subject) { 
+            return 0
+        }
+        
+        const now = new Date();
+        const sub = new Date(subject);
+        const diff = moment(now).diff(sub);
+        const dateDiff = Math.floor(diff / 1000 / 60 / 60 / 24);
+        return dateDiff > 0 ? 1 : 0;
+    }
+
+    const initialCount = (foods) => { 
+        let warning = 0;
+        let recipe = 0;
+        let basket = 0;
+        Object.keys(foods).map(key => {
+            const food = foods[key];
+            Object.keys(food).map((_key) => { 
+                recipe = recipe + (food[_key].recipeYN ? 1 : 0)
+                basket = basket + (food[_key].basketYN ? 1 : 0)
+                warning = warning + caculateDatediff(food[_key].expiredDate)
+            })
+        }) 
+        initialCountBasketRecipeWarning({ warning, recipe, basket })
     }
 
     useEffect(() => { 
@@ -20,6 +50,13 @@ const MyInfo = ({ toggle, count }) => {
         authServiceContext.checkUserState((user) => { 
             user && setUser({ email: user.email , photoURL : user.photoURL })
         })
+
+        dataServiceContext.getFoods(getSession('uid')).then((snapshot) => {
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                initialCount(data);
+            }
+        });
     } , [])
 
     return (<section className={styles.section}>
@@ -94,7 +131,8 @@ const mapStateToProp = (state) => {
 
 const mapDispatchToProps = (dispatch) => { 
     return {
-        toggle: () => dispatch(uiActionCreator.toggleRightMyInfo(false)) 
+        toggle: () => dispatch(uiActionCreator.toggleRightMyInfo(false)),
+        initialCountBasketRecipeWarning : (count) =>  dispatch(myInfoActionCreator .initialCountBasketRecipeWarning(count))
     }
 }
 
