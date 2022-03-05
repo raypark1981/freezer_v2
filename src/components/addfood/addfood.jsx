@@ -100,7 +100,15 @@ const AddFood = ({  }) => {
 
     useEffect(() => {
         if (!!fd) {
-            dataServiceContext.getFoods(getSession('uid'), setFood , `${sectionKey}/${fd}`);
+            dataServiceContext.getFoods(getSession('uid'), `${sectionKey}/${fd}`).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    setFood(data);
+                    
+                } else {
+                    setFood({});
+                }
+            });;
         } else {
             !!tmpFood.food && setFood(!!tmpFood.food ? tmpFood.food : {} );
         }

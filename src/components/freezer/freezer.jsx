@@ -3,12 +3,15 @@ import Header from '../header/header';
 import Section from './section/section';
 import Food from '../freezer/food/food';
 import styles from './freezer.module.css';
+import moment from 'moment';
 
 import { useNavigate, useParams } from 'react-router-dom';
 import { DataServiceContext } from '../../App';
 import { getSession, removeSession } from '../../services/session';
+import { myInfoActionCreator } from '../../actions/myInfo.action';
+import { connect } from 'react-redux';
 
-const Freezer = ({ }) => { 
+const Freezer = ({ initialCountBasketRecipeWarning }) => { 
     const { fz, fd } = useParams();
     const [freezer, setFreezer] = useState({});
     const [sections, setSections] = useState([]);
@@ -19,14 +22,14 @@ const Freezer = ({ }) => {
 
     const getMainData = () => { 
         const promise = dataServiceContext.getFreezerAll(getSession('uid'));
-        promise.then((datas) => { 
+        promise.then((datas) => {
             
             const fre = datas[0];
             const sec = datas[1];
             
             // main freezer
             let _mainFreezerKey = (Object.keys(fre).filter(key => fre[key].mainYN === "Y"));
-            if (!!fz) { 
+            if (!!fz) {
                 _mainFreezerKey = fz;
             }
             
@@ -36,8 +39,48 @@ const Freezer = ({ }) => {
             setFreezer(fre[_mainFreezerKey]);
             setSections(mainSections)
             setMainFreezerKey(_mainFreezerKey);
-            mainSections && mainSections.length > 0 && dataServiceContext.getFoods(getSession('uid'), setFoods);
+            
+
+            if (mainSections && mainSections.length > 0) { 
+                dataServiceContext.getFoods(getSession('uid')).then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const data = snapshot.val();
+                        setFoods(data);
+                        initialCount(data);
+                    } else {
+                        setFoods({});
+                    }
+                });
+            }
         })
+    }
+
+    const caculateDatediff = (subject) => { 
+        if (!subject) { 
+            return 0
+        }
+        
+        const now = new Date();
+        const sub = new Date(subject);
+        const diff = moment(now).diff(sub);
+        const dateDiff = Math.floor(diff / 1000 / 60 / 60 / 24);
+        return dateDiff > 0 ? 1 : 0;
+    }
+
+    
+    const initialCount = (foods) => { 
+        let warning = 0;
+        let recipe = 0;
+        let basket = 0;
+        Object.keys(foods).map(key => {
+            const food = foods[key];
+            Object.keys(food).map((_key) => { 
+                recipe = recipe + (food[_key].recipeYN ? 1 : 0)
+                basket = basket + (food[_key].basketYN ? 1 : 0)
+                warning = warning + caculateDatediff(food[_key].expiredDate)
+            })
+        }) 
+        initialCountBasketRecipeWarning({ warning, recipe, basket })
     }
 
     useEffect(() => {
@@ -74,4 +117,10 @@ const Freezer = ({ }) => {
     )
 }
 
-export default Freezer;
+const mapDispathToProp = (dispatch) => { 
+    return {
+        initialCountBasketRecipeWarning : (count) =>  dispatch(myInfoActionCreator.initialCountBasketRecipeWarning(count))
+    }
+}
+
+export default connect(null , mapDispathToProp)(Freezer);

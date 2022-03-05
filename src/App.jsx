@@ -29,12 +29,10 @@ import { connect } from 'react-redux';
 export const AuthServiceContext = React.createContext(null);
 export const DataServiceContext = React.createContext(null);
 
-
 const App = ({ authService, dataService , opened, toggle , spinerOnOff }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const nodeRef = useRef(null);
-  
 
   useEffect((e, t) => { 
     if (!getSession('uid')) { 
@@ -110,8 +108,8 @@ const App = ({ authService, dataService , opened, toggle , spinerOnOff }) => {
 
 const mapStateToProp = (state) => { 
   return {
-    opened: state.right_myinfo_opened,
-    spinerOnOff: state.spiner_on_off
+    opened: state.uiState.right_myinfo_opened,
+    spinerOnOff: state.uiState.spiner_on_off
   }
 }
 

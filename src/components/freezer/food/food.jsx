@@ -2,12 +2,13 @@ import moment from 'moment';
 import React, { memo, useContext, useState } from 'react';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { myInfoActionCreator } from '../../../actions/myInfo.action';
 import uiActionCreator from '../../../actions/uiAction';
 import { DataServiceContext } from '../../../App';
 import { getSession, setSession } from '../../../services/session';
 import styles from './food.module.css';
 
-const Food = memo(({ freezerkey, sectionKey, food }) => { 
+const Food = memo(({ freezerkey, sectionKey, food , addCountBasketRecipeWarning}) => { 
     const dataServiceContext = useContext(DataServiceContext);
     const navigate = useNavigate();
     const [_food, setFood] = useState(food);
@@ -17,11 +18,17 @@ const Food = memo(({ freezerkey, sectionKey, food }) => {
         switch (target) {
             case 'recipe':
                 yn.recipeYN = !_food.recipeYN;
-                setFood({..._food, recipeYN: !_food.recipeYN});
+                setFood({ ..._food, recipeYN: !_food.recipeYN });
+                addCountBasketRecipeWarning({
+                    recipe : !_food.recipeYN ? 1 : -1
+                })
                 break;
             case 'basket':
                 yn.basketYN = !_food.basketYN;
-                setFood({..._food, basketYN: !_food.basketYN});
+                setFood({ ..._food, basketYN: !_food.basketYN });
+                addCountBasketRecipeWarning({
+                    basket : !_food.basketYN ? 1 : -1
+                })
                 break;
             default:
                 return;
@@ -83,8 +90,10 @@ const Food = memo(({ freezerkey, sectionKey, food }) => {
 })
 
 const mapDispatchToProps = (dispatch) => { 
+    
     return {
-        onOffSpiner: () => dispatch(uiActionCreator.onOffSpiner())
+        onOffSpiner: () => dispatch(uiActionCreator.onOffSpiner()), 
+        addCountBasketRecipeWarning: (count) => dispatch(myInfoActionCreator.addCountBasketRecipeWarning(count))
     }   
 }
 

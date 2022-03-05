@@ -6,7 +6,6 @@ import { connect } from 'react-redux'
 import uiActionCreator from '../../actions/uiAction'
 const Header = ({ opened , toggleRightMyInfo }) => { 
     
-    const [open, setOpen] = useState(false);
     const handleClick = () => { 
         toggleRightMyInfo();
     }
@@ -25,7 +24,7 @@ const Header = ({ opened , toggleRightMyInfo }) => {
 }
 const mapStateToProps = (state) => { 
     return {
-        opened : state.left_myinfo_opened
+        opened : state.uiState.right_myinfo_opened
     }
 }
 

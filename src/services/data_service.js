@@ -98,16 +98,10 @@ class DataService {
     remove(ref(db, `${userId}/baskets/${basketkey}`));
   };
 
-  getFoods = (userId, setFood, foodUrl = "") => {
+  getFoods = (userId, foodUrl = "") => {
     if (!userId) return;
     const dbRef = ref(db);
-    get(child(dbRef, `${userId}/foods/${foodUrl}`)).then((snapshot) => {
-      if (snapshot.exists()) {
-        setFood(snapshot.val());
-      } else {
-        setFood({});
-      }
-    });
+    return get(child(dbRef, `${userId}/foods/${foodUrl}`));
   };
 
   getFreezerAll = async (userId) => {

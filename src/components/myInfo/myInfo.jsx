@@ -6,7 +6,8 @@ import uiActionCreator from '../../actions/uiAction';
 import { AuthServiceContext } from '../../App';
 import { getSession } from '../../services/session';
 import styles from './myInfo.module.css'
-const MyInfo = ({toggle}) => { 
+
+const MyInfo = ({ toggle, count }) => { 
     const [user, setUser] = useState(null);
     const authServiceContext = useContext(AuthServiceContext);
     const handleClick = () => { 
@@ -31,15 +32,15 @@ const MyInfo = ({toggle}) => {
     <div className={styles.sub_actions}>
         <div className={`${styles.sub_action} ${styles.warning}`}>
             <i></i>
-        {user && <p className={styles.count}>1</p>}
+        {user && <p className={styles.count}>{count ? count.warning : '0'}</p>}
         </div>
         <div className={`${styles.sub_action} ${styles.recipe}`}>
             <i></i>
-            { user && <p className={styles.count}>1</p>}
+            { user && <p className={styles.count}>{count ? count.recipe : '0'}</p>}
         </div>
         <div className={`${styles.sub_action} ${styles.basket}`}>
             <i></i>
-            { user && <p className={styles.count}>1</p>}
+            { user && <p className={styles.count}>{count ? count.basket : '0'}</p>}
         </div>
         </div>
         
@@ -85,10 +86,16 @@ const MyInfo = ({toggle}) => {
 </section>)
 }
 
+const mapStateToProp = (state) => { 
+    return {
+        count: state.myInfoState
+    }
+}
+
 const mapDispatchToProps = (dispatch) => { 
     return {
         toggle: () => dispatch(uiActionCreator.toggleRightMyInfo(false)) 
     }
 }
 
-export default connect(null , mapDispatchToProps)(MyInfo);
+export default connect(mapStateToProp , mapDispatchToProps)(MyInfo);
