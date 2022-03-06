@@ -7,6 +7,7 @@ import { getSession } from '../../services/session';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import SwiperType from './swiperType';
+import fetchJsonp from 'fetch-jsonp'
 
 const Recipe = ({ }) => {
   const navigate = useNavigate();
@@ -22,7 +23,9 @@ const Recipe = ({ }) => {
 
   const handleInputChange = (e) => {
     if (e.keyCode === 13 || e.keyCode === undefined) {
-      setTags(!e.target.value ? [] : [e.target.value]);
+      const params = !e.target.value ? [] : [e.target.value];
+      setTags(params);
+      searchRecipeAPI(params);
     }
   }
 
@@ -37,45 +40,95 @@ const Recipe = ({ }) => {
     useSearch.current.value = ''
     if (e.target.tagName !== 'BUTTON') return;
 
-    /** tag 삭제 재클릭시 */
+    /** 재클릭시 tag 삭제  */
+    let total = [];
+    let selectedIngredient, selectedType, selectedWay;
+
     if (newTags.indexOf(v) >= 0) { 
       setTags(newTags.filter(h => h !== v))
+      getRecipeAPI(total);
       return;
     }
-    
-    let selectedIngredient, selectedType, selectedWay;
+  
     switch (tap) { 
       case 'i':
         /** 재료는 중복이 가능함으로 */
-        newTags.indexOf(v) < 0 && setTags([...new Set([...newTags, e.target.innerText])].filter(i => !!i));
+        total = [...new Set([...newTags, e.target.innerText])].filter(i => !!i);
+        newTags.indexOf(v) < 0 && setTags(total);
         break;
       case 'w':
         selectedIngredient = [...new Set(newTags.filter(i => cookIngredient.includes(i)))] 
         selectedType = [...new Set(newTags.filter(i => cookType.includes(i)))] 
         /** 방법은 중복이 불가능함 */
         selectedWay = [e.target.innerText] 
-        setTags([...new Set([
+        total = [...new Set([
           useSearch.current.value
           , ...selectedIngredient
           , ...selectedWay
           , ...selectedType
-          , e.target.innerText])].filter(i => !!i));
+          , e.target.innerText])].filter(i => !!i);
+        setTags(total);
+        
           break;
       case 't':
         selectedIngredient = [...new Set(newTags.filter(i => cookIngredient.includes(i)))] 
         /** 종류별도 중복이 불가능함 */
         selectedType = [e.target.innerText] 
         selectedWay = [...new Set(newTags.filter(i => cookWay.includes(i)))] 
-        setTags([...new Set([
+        total = [...new Set([
           useSearch.current.value
           , ...selectedIngredient
           , ...selectedWay
           , ...selectedType
-          , e.target.innerText])].filter(i => !!i));
+          , e.target.innerText])].filter(i => !!i);
+        setTags(total);
           break;
     }
-
+    getRecipeAPI(total);
   };
+  const callback = (d) => { 
+    console.log(d)
+  }
+  const searchRecipeAPI = (params) => { 
+    const hostName = 'http://foodkiper.com/api/SearchAPI?'
+    const _params = `type=searchByText&dtls=${params[0]}&way2=&pat2=&key=wkftkfdkqhqtlek`   
+    setTimeout(() => {
+      fetchJsonp(hostName + _params,
+        { jsonpCallbackFunction: 'jsoncallback' })
+        .then(function (response) {
+          return response.json()
+        }).then(function (json) {
+          setSearchRecipe(json.RecipeIndexlist);
+        }).catch(function (ex) {
+        console.log('parsing failed', ex)
+      })
+    }, 100);
+  }
+
+  const getRecipeAPI = (params) => { 
+    // console.log(params);
+    // console.log(cookIngredient, cookType, cookWay)
+
+    const hostName = 'http://foodkiper.com/api/SearchAPI?'
+    const ing = cookIngredient.filter(i => params.indexOf(i) > -1).map(i => encodeURIComponent(i));
+    const way = cookWay.filter(i => params.indexOf(i) > -1).map(i => encodeURIComponent(i));;
+    const typ = cookType.filter(i => params.indexOf(i) > -1).map(i => encodeURIComponent(i));;
+    
+
+    const _params = `type=search&dtls=${ing.join('+')}&way2=${way[0] ? way[0] : '' }&pat2=${typ[0] ? typ[0] : ''}&key=wkftkfdkqhqtlek` 
+    
+    setTimeout(() => {
+      fetchJsonp(hostName + _params,
+        { jsonpCallbackFunction: 'jsoncallback' })
+        .then(function (response) {
+          return response.json()
+        }).then(function (json) {
+          setSearchRecipe(json.RecipeIndexlist);
+        }).catch(function (ex) {
+        console.log('parsing failed', ex)
+      })
+    }, 100);
+  }
 
   const getRecipes = (type, dtls, way2, pat2) => {
     fetch('/recipe.json?type=' + type).then(data => data.json()).then((data) => {
@@ -108,21 +161,10 @@ const Recipe = ({ }) => {
           })
         });
         
-        setCookIngredient(temp);
+        setCookIngredient([...new Set(temp)]);
       }
     });
-  
-    // getRecipes('search');
   }, [])
-
-  useEffect(() => { 
-    console.log(hotRecipe.filter(r => { 
-      
-      // return tags.indexOf(r.RCP_PAT2) > -1 || tags.indexOf(r.RCP_WAY2) > -1 || 
-
-    }))
-    // setHotRecipe()
-  }, [tags])
 
   return (
     <section className={styles.my_freezer}>
@@ -181,7 +223,7 @@ const Recipe = ({ }) => {
         <ul className={styles.recipes}>
           {
             searchRecipe.length > 0 && searchRecipe.map((recipe) => { 
-              return <RecipeItem key={recipe.REP_SEQ} recipe={recipe} />
+              return <RecipeItem key={recipe.RCP_SEQ} recipe={recipe} />
             })
           }
         </ul>

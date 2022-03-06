@@ -4732,6 +4732,11 @@
   dependencies:
     "bser" "2.1.1"
 
+"fetch-jsonp@^1.2.1":
+  "integrity" "sha512-5UwejksxssYwlwl/9OhEQU+OrVaxdChOQntpJO/GUw6NpfPS6fd08fPvbNOq0Ym6hxfLWD6cGN0Ln/V/hWcluw=="
+  "resolved" "https://registry.npmjs.org/fetch-jsonp/-/fetch-jsonp-1.2.1.tgz"
+  "version" "1.2.1"
+
 "file-entry-cache@^6.0.1":
   "integrity" "sha512-7Gps/XWymbLk2QLYK4NzpMOrYjMhdIxXuIvy2QBsLE6ljuodKvdkWs/cpyJJ3CVIVpH0Oi1Hvg1ovbMzLdFBBg=="
   "resolved" "https://registry.npmjs.org/file-entry-cache/-/file-entry-cache-6.0.1.tgz"
