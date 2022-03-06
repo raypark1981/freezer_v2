@@ -1,0 +1,100 @@
+{
+    "RCP_SEQ": "5",
+    "RCP_NM": "된장 크림 소스를 곁들인 잡곡 오므라이스",
+    "RCP_WAY2": "볶기",
+    "RCP_WAY2_Code": "WA004",
+    "RCP_PAT2": "밥",
+    "RCP_PAT2_Code": "PA004",
+    "INFO_WGT": "1인분",
+    "INFO_ENG": "640.000",
+    "INFO_CAR": "58.000",
+    "INFO_PRO": "30.000",
+    "INFO_FAT": "32.000",
+    "INFO_NA": "264.000",
+    "HASH_TAG": "",
+    "ATT_FILE_NO_MAIN": "http://www.foodsafetykorea.go.kr/uploadimg/cook/10_00005_2.png",
+    "ATT_FILE_NO_MK": "http://www.foodsafetykorea.go.kr/uploadimg/cook/10_00005_1.png",
+    "RCP_PARTS_DTLS": "잡곡복음밥\n찹쌀 35g, 보리 20g, 율무 20g, 은행 5g(2알), 팥 10g(2작은술), 대추 5g(2개), 호박 20g(2cm), 부추 10g, 홍피망 10g(1/8개), 청피망 10g(1/8개), 양파 20g(1/6개), 마늘 5g(1쪽),\n오므라이스\n달걀 100g(2개), 식용유 약간, 전분 약간\n된장크림 소스\n저염일식된장 10g(2작은술), 마른표고버섯 10g(1개), 양파20g(1/6개),\n마늘 10g(2쪽), 생크림 50g(1/4컵), 물엿 15g(1큰술), 로즈마리 5g\n곁들임\n새싹채소 5g, 무순 2g, 상추 4g(1장)",
+    "MANUALS": [
+        {
+            "MANUAL_DESC": "1. 잡곡을 깨끗하게 씻고 물에 30분 정도 불린 후 물은 동량으로 맞추어 고슬고슬한 밥을 짓는다.",
+            "MANUAL_IMG": "http://www.foodsafetykorea.go.kr/uploadimg/cook/20_00005_1.png"
+        },
+        {
+            "MANUAL_DESC": "2. 호박, 청피망, 홍피망, 양파를 사방 0.5cm 정도의 크기로 다지고, 부추는 송송 썰고, 마늘은 곱게 다진다.",
+            "MANUAL_IMG": ""
+        },
+        {
+            "MANUAL_DESC": "3. 달궈진 프라이팬에 피망, 호박, 양파, 부추, 마늘을 볶다가, (1)의 잡곡밥을 넣고 볶는다.",
+            "MANUAL_IMG": ""
+        },
+        {
+            "MANUAL_DESC": "4. 저염 일식 된장에 마른 표고버섯, 양파, 마늘을 믹서에 넣고 갈아서 체에 걸러 된장소스를 준비한다.",
+            "MANUAL_IMG": "http://www.foodsafetykorea.go.kr/uploadimg/cook/20_00005_4.png"
+        },
+        {
+            "MANUAL_DESC": "5. 달궈진 프라이팬에 식용유를 두르고 마늘을 넣어 향을 내고, 생크림과 물엿, 다진 로즈마리와 만들어 놓은 된장소스(4)를 넣고 잘 섞어 된장크림 소스를 만든다.",
+            "MANUAL_IMG": "http://www.foodsafetykorea.go.kr/uploadimg/cook/20_00005_5.png"
+        },
+        {
+            "MANUAL_DESC": "6. 잘 푼 달걀에 전분을 섞은후 달구어진 프라이팬에 달걀을 부어 얇게 돌린 후 반 정도 익으면 볶은 밥을얹어 달걀을 덮는다.",
+            "MANUAL_IMG": "http://www.foodsafetykorea.go.kr/uploadimg/cook/20_00005_6.png"
+        },
+        {
+            "MANUAL_DESC": "7. 채소와 된장크림 소스를 곁들인다.",
+            "MANUAL_IMG": ""
+        },
+        {
+            "MANUAL_DESC": "",
+            "MANUAL_IMG": ""
+        },
+        {
+            "MANUAL_DESC": "",
+            "MANUAL_IMG": ""
+        },
+        {
+            "MANUAL_DESC": "",
+            "MANUAL_IMG": ""
+        },
+        {
+            "MANUAL_DESC": "",
+            "MANUAL_IMG": ""
+        },
+        {
+            "MANUAL_DESC": "",
+            "MANUAL_IMG": ""
+        },
+        {
+            "MANUAL_DESC": "",
+            "MANUAL_IMG": ""
+        },
+        {
+            "MANUAL_DESC": "",
+            "MANUAL_IMG": ""
+        },
+        {
+            "MANUAL_DESC": "",
+            "MANUAL_IMG": ""
+        },
+        {
+            "MANUAL_DESC": "",
+            "MANUAL_IMG": ""
+        },
+        {
+            "MANUAL_DESC": "",
+            "MANUAL_IMG": ""
+        },
+        {
+            "MANUAL_DESC": "",
+            "MANUAL_IMG": ""
+        },
+        {
+            "MANUAL_DESC": "",
+            "MANUAL_IMG": ""
+        },
+        {
+            "MANUAL_DESC": "",
+            "MANUAL_IMG": ""
+        }
+    ]
+}

@@ -1,16 +1,17 @@
 import React, {memo, useCallback, useContext, useEffect, useRef, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import styles from "./recipe.module.css";
 import { DataServiceContext } from "../../App";
 import { getSession } from '../../services/session';
 
-import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import SwiperType from './swiperType';
 import fetchJsonp from 'fetch-jsonp'
 
+const hostName = '//foodkiper.com/'
+const apikey = 'wkftkfdkqhqtlek'
+
 const Recipe = ({ }) => {
-  const navigate = useNavigate();
   const [tags, setTags] = useState([]);
   const [hotRecipe, setHotRecipe] = useState([]);
   const [searchRecipe, setSearchRecipe] = useState([]);
@@ -90,8 +91,7 @@ const Recipe = ({ }) => {
     console.log(d)
   }
   const searchRecipeAPI = (params) => { 
-    const hostName = 'http://foodkiper.com/api/SearchAPI?'
-    const _params = `type=searchByText&dtls=${params[0]}&way2=&pat2=&key=wkftkfdkqhqtlek`   
+    const _params = `api/SearchAPI?type=searchByText&dtls=${params[0]}&way2=&pat2=&key=${apikey}`   
     setTimeout(() => {
       fetchJsonp(hostName + _params,
         { jsonpCallbackFunction: 'jsoncallback' })
@@ -106,17 +106,12 @@ const Recipe = ({ }) => {
   }
 
   const getRecipeAPI = (params) => { 
-    // console.log(params);
-    // console.log(cookIngredient, cookType, cookWay)
-
-    const hostName = 'http://foodkiper.com/api/SearchAPI?'
     const ing = cookIngredient.filter(i => params.indexOf(i) > -1).map(i => encodeURIComponent(i));
     const way = cookWay.filter(i => params.indexOf(i) > -1).map(i => encodeURIComponent(i));;
     const typ = cookType.filter(i => params.indexOf(i) > -1).map(i => encodeURIComponent(i));;
     
 
-    const _params = `type=search&dtls=${ing.join('+')}&way2=${way[0] ? way[0] : '' }&pat2=${typ[0] ? typ[0] : ''}&key=wkftkfdkqhqtlek` 
-    
+    const _params = `api/SearchAPI?type=search&dtls=${ing.join('+')}&way2=${way[0] ? way[0] : '' }&pat2=${typ[0] ? typ[0] : ''}&key=${apikey}` 
     setTimeout(() => {
       fetchJsonp(hostName + _params,
         { jsonpCallbackFunction: 'jsoncallback' })
@@ -167,6 +162,7 @@ const Recipe = ({ }) => {
   }, [])
 
   return (
+    
     <section className={styles.my_freezer}>
       <header className={styles.header}>
         <div className={`${styles.middle}`}>
@@ -263,11 +259,13 @@ const Recipe = ({ }) => {
 };
 
 const RecipeItem = memo(({ recipe }) => { 
-  const { DISP_RCP_NM, RCP_WAY2, RCP_PAT2, HASH_TAG, ATT_FILE_NO_MAIN } = recipe;
+  const { RCP_SEQ, DISP_RCP_NM, RCP_WAY2, RCP_PAT2, HASH_TAG, ATT_FILE_NO_MAIN } = recipe;
   return (
     <li className={styles.recipe}>
       <div className={styles.image_box}>
-        <img src={ATT_FILE_NO_MAIN} alt={DISP_RCP_NM} />
+        <Link to={"/recipe/" + RCP_SEQ}>
+          <img src={ATT_FILE_NO_MAIN} alt={DISP_RCP_NM} />
+        </Link>
       </div>
       <h5>{DISP_RCP_NM}</h5>
       <div className={styles.tags}>

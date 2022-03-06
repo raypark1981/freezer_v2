@@ -1,6 +1,6 @@
 /** react */
 import React, { useEffect, useRef, useState } from 'react';
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 /** components */
 import AddFood from './components/addfood/addFood';
@@ -23,6 +23,7 @@ import uiActionCreator from './actions/uiAction';
 import { getSession } from './services/session';
 /**redux */
 import { connect } from 'react-redux';
+import RecipeDetail from './components/recipe/recipeDetail';
 
 
 /** context */
@@ -88,7 +89,8 @@ const App = ({ authService, dataService , opened, toggle , spinerOnOff }) => {
                   <Route path="/myEdit" element={<MyEdit />} />
                   <Route path="/myFreezer" element={<MyFreezer />} />
                   <Route path="/myBasket" element={<MyBasket />} />
-                  <Route path="/recipe" element={<Recipe />} />
+                  <Route path="/recipe/"element={<Recipe />} />
+                  <Route path="/recipe/:id" element={<RecipeDetail />} /> 
                   <Route path="/notice" element={<Notice/>} />
               </Routes>    
               </div>
