@@ -15,6 +15,7 @@ const Freezer = ({ }) => {
     const [sections, setSections] = useState([]);
     const [foods, setFoods] = useState({});   
     const [mainFreezerKey, setMainFreezerKey] = useState();
+    const [lastSelectedSection, setLastSelectedSecion] = useState();
     const navigate = useNavigate();
     const dataServiceContext = useContext(DataServiceContext);
 
@@ -40,6 +41,12 @@ const Freezer = ({ }) => {
             
 
             if (mainSections && mainSections.length > 0) { 
+
+                /** 마지막 누른 정보 아니면 기본 첫번째 섹션 셋팅 */
+                setLastSelectedSecion(getSession('lastSectionKey') || mainSections[0].key)
+                /** 마지막 누른 section key는 필요 없음 */
+                removeSession('lastSectionKey');
+
                 dataServiceContext.getFoods(getSession('uid')).then((snapshot) => {
                     if (snapshot.exists()) {
                         const data = snapshot.val();
@@ -52,13 +59,13 @@ const Freezer = ({ }) => {
         })
     }
 
-
     useEffect(() => {
         if (!getSession('uid')) return;
         getMainData();
         removeSession('tmpFood');
-        removeSession('sectionKey');
-    } , [])
+        
+    }, [])
+    
     return (
     <>
         <Header />
@@ -67,9 +74,9 @@ const Freezer = ({ }) => {
             <section className={styles.freezer}>
             {
                     
-                sections && sections.length > 0 && sections.map((section) => {       
+                sections && sections.length > 0 && sections.map((section ,idx) => {       
                     return <React.Fragment key={section.key}>
-                        <Section freezerkey={mainFreezerKey} section={section} foods={foods[section.key]} />
+                        <Section idx={idx} selectedKey={lastSelectedSection} freezerkey={mainFreezerKey} section={section} foods={foods[section.key]} />
                         <ul className={styles.food_section}>
                             {
                                 !!foods[section.key] && Object.keys(foods[section.key]).map(key => { 

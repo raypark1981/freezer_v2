@@ -41,7 +41,8 @@ const Food = memo(({ freezerkey, sectionKey, food , addCountBasketRecipeWarning}
 
         const foodkey = e.currentTarget.dataset.key;
         navigate(`/addfood/${freezerkey}/${foodkey}`);
-        setSession('sectionKey',sectionKey);
+        /** 마지막 누른 음식의 섹션  정보 기억*/
+        setSession('lastSectionKey',sectionKey);
     }
 
     const handleNoImage = (e) => { 

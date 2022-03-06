@@ -19,7 +19,7 @@ const AddFood = ({  }) => {
     const [actKeepCalendar, setActKeepCalendar] = useState(false);
     const [actExpiredCalendar, setActExpiredCalendar] = useState(false);
     const [tmpFood, setTmpFood] = useState(getSession('tmpFood', {}));
-    const [sectionKey, setSectionKey] = useState(getSession('sectionKey', ''));
+    const [sectionKey, setSectionKey] = useState(getSession('lastSectionKey', ''));
     
     const handleInputName = (e) => {
         if (e.currentTarget.tagName === 'INPUT') {

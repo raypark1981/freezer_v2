@@ -70,6 +70,7 @@
     
 }
 .add_food{
+    position: relative;
     width: 40%;
     text-align: right;
     margin-right: 0.8rem;
