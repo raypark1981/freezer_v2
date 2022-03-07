@@ -51,9 +51,6 @@
     align-items: center;
     padding-left: .5rem;
 }
-div.block:last-of-type{
-    margin-top: 0;
-}
 .icon{
     width: 1.5625rem;
     height: 1.5625rem;
@@ -160,4 +157,20 @@ div.block:last-of-type{
     content:" > ";
     font-weight: 500;
     margin-right: .5rem;
+}
+.button_box{
+    width: 100%;
+}
+.delete{
+    display: block;
+    border:0;
+    border-radius: .4rem;
+    background-color: rgb(235, 11, 48);
+    color:var(--color-white);
+    font-weight: 900;
+    padding:.8rem 3rem;
+    margin: .5rem auto;
+}
+.mart0{
+    margin-top:0
 }

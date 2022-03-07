@@ -1,5 +1,5 @@
-import React, {memo, useCallback, useContext, useEffect, useRef, useState } from "react";
-import { Link, Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import styles from "./recipe.module.css";
 import { DataServiceContext } from "../../App";
 import { getSession } from '../../services/session';
@@ -7,6 +7,7 @@ import { getSession } from '../../services/session';
 import 'swiper/css';
 import SwiperType from './swiperType';
 import fetchJsonp from 'fetch-jsonp'
+import RecipeList from './recipeList';
 
 const hostName = '//foodkiper.com/'
 const apikey = 'wkftkfdkqhqtlek'
@@ -46,7 +47,8 @@ const Recipe = ({ }) => {
     let selectedIngredient, selectedType, selectedWay;
 
     if (newTags.indexOf(v) >= 0) { 
-      setTags(newTags.filter(h => h !== v))
+      total = newTags.filter(h => h !== v);
+      setTags(total)
       getRecipeAPI(total);
       return;
     }
@@ -87,9 +89,7 @@ const Recipe = ({ }) => {
     }
     getRecipeAPI(total);
   };
-  const callback = (d) => { 
-    console.log(d)
-  }
+
   const searchRecipeAPI = (params) => { 
     const _params = `api/SearchAPI?type=searchByText&dtls=${params[0]}&way2=&pat2=&key=${apikey}`   
     setTimeout(() => {
@@ -118,7 +118,7 @@ const Recipe = ({ }) => {
         .then(function (response) {
           return response.json()
         }).then(function (json) {
-          setSearchRecipe(json.RecipeIndexlist);
+          setSearchRecipe(json ? json.RecipeIndexlist : []);
         }).catch(function (ex) {
         console.log('parsing failed', ex)
       })
@@ -127,7 +127,7 @@ const Recipe = ({ }) => {
 
   const getRecipes = (type, dtls, way2, pat2) => {
     fetch('/recipe.json?type=' + type).then(data => data.json()).then((data) => {
-      setHotRecipe(data.RecipeIndexlist);
+      setHotRecipe(data ? data.RecipeIndexlist : []);
       const tmpCookWay = [];
       const tmpCookType = []
 
@@ -162,7 +162,6 @@ const Recipe = ({ }) => {
   }, [])
 
   return (
-    
     <section className={styles.my_freezer}>
       <header className={styles.header}>
         <div className={`${styles.middle}`}>
@@ -196,13 +195,14 @@ const Recipe = ({ }) => {
       }
       {tap === 'i' &&
         <div className={`${styles.sub_block}`} onClick={handleCookType}>
-          <SwiperType data={cookIngredient} tags={tags} />
-          {cookIngredient.length === 0 &&
+          {
+            cookIngredient.length === 0 &&
             <>
               < i className={styles.happy} />
               <span>냉장고 재료를 선택해주세요!</span>
             </>
           }
+          <SwiperType data={cookIngredient} tags={tags} />
         </div>
       }
 
@@ -216,65 +216,21 @@ const Recipe = ({ }) => {
           </div>
        
         </div>
-        <ul className={styles.recipes}>
-          {
-            searchRecipe.length > 0 && searchRecipe.map((recipe) => { 
-              return <RecipeItem key={recipe.RCP_SEQ} recipe={recipe} />
-            })
-          }
-        </ul>
-        {
-          searchRecipe.length == 0 && <div className={styles.no_data}><i className={styles.annoying}/>검색어를 입력해주세요</div>
-        }
-        <div className={styles.more}>
-          <button>read more</button>
-        </div>
+        <RecipeList data={searchRecipe}/>
       </div>
 
       <div className={styles.block}>
         <div className={styles.recipe_header}>
           <h4>인기레시피</h4>
           <div className={styles.tags}>
-            <span>#밥</span><span>#끓이기</span>
+            {/* <span>#밥</span><span>#끓이기</span> */}
           </div>
-       
         </div>
-        
-         <ul className={styles.recipes}>
-          {
-            hotRecipe.length > 0 && hotRecipe.map((recipe) => { 
-              return <RecipeItem key={recipe.RCP_SEQ} recipe={recipe} />
-            })
-          }
-        </ul>
-        {
-          hotRecipe.length == 0 && <div className={styles.no_data}><i className={styles.annoying}/>검색어를 입력해주세요</div>
-        }
-        <div className={styles.more}>
-          <button>read more</button>
-        </div>
+        <RecipeList data={hotRecipe}/>
       </div>
     </section>
   );
 };
 
-const RecipeItem = memo(({ recipe }) => { 
-  const { RCP_SEQ, DISP_RCP_NM, RCP_WAY2, RCP_PAT2, HASH_TAG, ATT_FILE_NO_MAIN } = recipe;
-  return (
-    <li className={styles.recipe}>
-      <div className={styles.image_box}>
-        <Link to={"/recipe/" + RCP_SEQ}>
-          <img src={ATT_FILE_NO_MAIN} alt={DISP_RCP_NM} />
-        </Link>
-      </div>
-      <h5>{DISP_RCP_NM}</h5>
-      <div className={styles.tags}>
-        { RCP_WAY2 && <span>#{RCP_WAY2}</span>}
-        { RCP_PAT2 && <span>#{RCP_PAT2}</span>}
-        { HASH_TAG && <span>#{HASH_TAG}</span>}
-      </div>
-    </li>
-  )
-})
 
 export default Recipe;

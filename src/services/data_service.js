@@ -61,6 +61,11 @@ class DataService {
     const value = update(ref(db), updates);
   };
 
+  deleteFood = (userId, sectionkey, foodkey) => {
+    if (!userId) return;
+    remove(ref(db, `${userId}/foods/${sectionkey}/${foodkey}`));
+  };
+
   updateFoodBasket = (userId, sectionkey, foodKey, basketYN) => {
     if (!userId) return;
     const updates = {};

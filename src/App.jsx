@@ -20,10 +20,11 @@ import styles from './app.module.css'
 /** action */
 import uiActionCreator from './actions/uiAction';
 /** session */
-import { getSession } from './services/session';
+import { getLocal, getSession } from './services/session';
 /**redux */
 import { connect } from 'react-redux';
 import RecipeDetail from './components/recipe/recipeDetail';
+import WhatIs from './components/whatis/whatis';
 
 
 /** context */
@@ -34,6 +35,7 @@ const App = ({ authService, dataService , opened, toggle , spinerOnOff }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const nodeRef = useRef(null);
+  const [visibleWhatis, setVisibleWhatis] = useState(false);
 
   useEffect((e, t) => { 
     if (!getSession('uid')) { 
@@ -62,6 +64,15 @@ const App = ({ authService, dataService , opened, toggle , spinerOnOff }) => {
    
   }, [location])
 
+  useEffect(() => { 
+    const expired = getLocal('whatis');
+    if (!!expired) {
+      setVisibleWhatis(new Date() > new Date(expired));
+    } else { 
+      setVisibleWhatis(true);
+    }
+  },[])
+
   return (
     <div className={styles.app}>
       <DataServiceContext.Provider value={dataService}>
@@ -69,6 +80,7 @@ const App = ({ authService, dataService , opened, toggle , spinerOnOff }) => {
         <TransitionGroup component={null}>
           <CSSTransition nodeRef={nodeRef} key={location.key} classNames="fade" timeout={300} >
             <div className={styles.app_body}>
+                {visibleWhatis && <WhatIs setVisibleWhatis={setVisibleWhatis}/>}
               <div className={styles.main} ref={nodeRef}>
               <Routes location={location}>
                   <Route path="/" element={<Login/>} />

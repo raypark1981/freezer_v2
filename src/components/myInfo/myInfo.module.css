@@ -17,6 +17,7 @@ overflow: hidden;
     height: 3.325rem;
     border:.2rem solid var(--color-dark-grey);
     border-radius: 50%;
+    margin:auto;
 }
 .email{
     margin-top:1rem;

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { memo, useContext, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './myBasket.module.css';
 import { DataServiceContext } from '../../App';
@@ -69,6 +69,7 @@ const MyBasket = ({ }) => {
                     <button data-target="save" onClick={goToPage}></button>
                 </div>
             </header>
+            <div className={styles.basket_container}>
             {
                 foods && Object.keys(foods).map((key) => { 
                     const temp = foods[key];
@@ -85,17 +86,15 @@ const MyBasket = ({ }) => {
                     return <Basket key={key} basketKey={key} name={baskets[key].name} dataServiceContext={dataServiceContext} setBaskets={setBaskets} baskets={baskets} />
                 })
             }
-            
+            </div>
             <div className={styles.section_add}>
-                <div >
-                    <button className={`${styles.btn_add}`} onClick={handleAddBasket}></button>
-                </div>
+                <button className={`${styles.btn_add}`} onClick={handleAddBasket}></button>
             </div>
         </section>
     )
 }
 
-const Basket = ({ name, basketKey, foodKey, sectionKey, dataServiceContext, setBaskets, baskets }) => { 
+const Basket = memo(({ name, basketKey, foodKey, sectionKey, dataServiceContext, setBaskets, baskets }) => { 
     const [actInput, setActInput] = useState(false);
     const [checked, setChecked] = useState(false);
     const [display, setDisplay] = useState(true);
@@ -149,7 +148,7 @@ const Basket = ({ name, basketKey, foodKey, sectionKey, dataServiceContext, setB
 
     useEffect(() => { 
         (basketKey && !name) && setActInput(true);
-    })
+    }, [])
 
     return (
         display &&
@@ -165,7 +164,7 @@ const Basket = ({ name, basketKey, foodKey, sectionKey, dataServiceContext, setB
         </div>
     </div>)
     
-}
+})
 
 export default MyBasket;
 

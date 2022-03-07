@@ -2,6 +2,7 @@
     position:relative;
     height: 100%;
     background-color: var(--color-light-grey);
+    overflow-y: hidden;
 }
 .header{
     height: 4.75rem;
@@ -37,6 +38,10 @@
 }
 .create_date{
     padding:.5rem 1rem;
+}
+.block_container{
+    overflow-y: scroll;
+    height: calc(100% - 4.75rem);
 }
 .block{
     margin-top:.5em;
@@ -161,11 +166,8 @@
     bottom: 7%;
     right: 8%;
     position: absolute;
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
-    flex-direction: column;
     z-index: 10;
+    height: 5rem;
 }
 .btn_add{
     background: no-repeat url('../../icon/plus_white.png');
@@ -196,7 +198,7 @@
 }
 
 .btn_box.on{
-    transform: translateY(-72px);
+    transform: translateY(-8.125rem);
 }
 .btn_freezer{
     background: no-repeat url('../../icon/freezer_white.png');

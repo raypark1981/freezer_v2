@@ -64,7 +64,7 @@ const AddFood = ({  }) => {
             !actExpiredCalendar && setActKeepCalendar(false);
         }
     }
-
+    
     const goToPage = (e) => {
         const target = e.currentTarget.dataset.target;
         switch (target) {
@@ -82,6 +82,9 @@ const AddFood = ({  }) => {
                 navigate(`/freezer/${fz}`)
                 break;
             case 'delete':
+                if (!window.confirm('삭제하시겠습니까?')) return;
+                    
+                dataServiceContext.deleteFood(getSession('uid'), sectionKey, food.key);
                 navigate(`/freezer/${fz}`)
 
                 break;
@@ -106,7 +109,7 @@ const AddFood = ({  }) => {
                     setFood(data);
                     
                 } else {
-                    setFood({});
+                    navigate(`/freezer/${fz}`, {replace : false})
                 }
             });;
         } else {
@@ -192,9 +195,14 @@ const AddFood = ({  }) => {
                 <button className={`${styles.icon} ${styles.foodcup}`}></button>
                 <div className={styles.middle}>품목명</div>
             </div>
-            <div className={styles.block}>
+            <div className={`${styles.block} ${styles.mart0}`}>
                 <FoodType foodGrp={food.foodGrp} onChange={handleFoodType } />
             </div>
+            { food.key && <div className={styles.block}>
+                <div className={styles.button_box}>
+                    <button data-target="delete" className={styles.delete} onClick={goToPage}>삭제</button>
+                </div>
+            </div>}
         </section>
     )
 }

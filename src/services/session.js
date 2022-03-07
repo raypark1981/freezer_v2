@@ -25,7 +25,7 @@ export const removeSession = (key) => {
   mySession.removeItem(key);
 };
 
-export const getLogal = (key, defaultValue) => {
+export const getLocal = (key, defaultValue) => {
   try {
     return JSON.parse(myLocalStorage.getItem(key)) || defaultValue;
   } catch {

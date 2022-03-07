@@ -100,7 +100,7 @@ const MyFreezer = ({ }) => {
                     <button data-target="save" onClick={goToPage}></button>
                 </div>
             </header>
-            <div>
+            <div className={styles.block_container}>
                 {
                     freezer && Object.keys(freezer).map((key) => { 
                         return (
