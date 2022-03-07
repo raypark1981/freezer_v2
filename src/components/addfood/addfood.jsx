@@ -68,6 +68,9 @@ const AddFood = ({  }) => {
     const goToPage = (e) => {
         const target = e.currentTarget.dataset.target;
         switch (target) {
+            case 'close':
+                navigate(`/freezer/${fz}`)
+                break;
             case 'save':
                 if (!food.foodName) {
                     alert('푸드 이름이 필요합니다.');
@@ -109,9 +112,9 @@ const AddFood = ({  }) => {
                     setFood(data);
                     
                 } else {
-                    navigate(`/freezer/${fz}`, {replace : false})
+                    navigate(`/freezer/${fz}`, { replace: false })
                 }
-            });;
+            });
         } else {
             !!tmpFood.food && setFood(!!tmpFood.food ? tmpFood.food : {} );
         }
@@ -121,7 +124,7 @@ const AddFood = ({  }) => {
         <section className={styles.add_food}>
             <header className={styles.header}>
                 <div>
-                    <button data-target="delete" className={styles.left} onClick={goToPage}></button>
+                    <button data-target="close" className={styles.left} onClick={goToPage}></button>
                 </div>
                 <h3 className={`${styles.middle} ${styles.align_center}` }>추가</h3>
                 <div>

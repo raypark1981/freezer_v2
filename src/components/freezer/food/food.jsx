@@ -46,8 +46,8 @@ const Food = memo(({ freezerkey, sectionKey, food , addCountBasketRecipeWarning}
     }
 
     const handleNoImage = (e) => { 
+        e.target.onerror = null;
         e.target.src = `../../images/foods/${"nofood"}.png`;
-        e.target.onError = null;
     }
 
     const caculateDatediff = (subject) => { 
@@ -68,7 +68,10 @@ const Food = memo(({ freezerkey, sectionKey, food , addCountBasketRecipeWarning}
             <div className={styles.outline}>
                 <div className={styles.food} >
                     <div className={styles.img} >
-                        <img src={`../../images/foods/${_food.foodGrp}.png`} onError={handleNoImage} alt="" />
+                        <img src={!!_food.foodGrp ?
+                            `../../images/foods/${_food.foodGrp}.png` : 
+                            '../../images/foods/nofood.png'
+                    } onError={handleNoImage} alt="" />
                     </div>
                     <div className={styles.info} >
                         <div>

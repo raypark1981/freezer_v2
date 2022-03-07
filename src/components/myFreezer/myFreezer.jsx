@@ -57,6 +57,11 @@ const MyFreezer = ({ }) => {
 
     const addFreezer = () => { 
         const fzkey = `fz${Date.now()}`;
+        if (Object.keys(freezer).length >= 2) { 
+            alert("냉장고는 2개 이상 만들 수 없습니다.");
+            setAddOpen(false);
+            return;
+        }
         setFreezer({ ...freezer, [fzkey]: { name: '이름을 지어주세요.' } })
         setAddOpen(false);
     }
@@ -70,6 +75,11 @@ const MyFreezer = ({ }) => {
 
         const sckey = `sc${Date.now()}`;
         const newSection = section[selectFreezer] || [];
+        if (newSection.length >= 5) { 
+            alert("칸은 5개 이상 만들 수 없습니다.");
+            setAddOpen(false);
+            return;
+        }
         setSection({...section , [selectFreezer] :  
             [...newSection, { key: sckey,  name: '칸 이름을 지어주세요.' } ]
         });

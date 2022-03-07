@@ -38,11 +38,12 @@ const App = ({ authService, dataService , opened, toggle , spinerOnOff }) => {
   const [visibleWhatis, setVisibleWhatis] = useState(false);
 
   useEffect((e, t) => { 
-    if (!getSession('uid')) { 
-      return () => { 
-        console.log('im dying');
-      }
-    }
+    // if (!getSession('uid')) { 
+    //   navigate('/', { replace: false })
+    //   return () => { 
+    //     console.log('im dying');
+    //   }
+    // }
 
     if (location.pathname !== "/") { 
       authService.checkUserState((user) => { 
