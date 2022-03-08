@@ -1,6 +1,7 @@
 
 import React , { memo } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import {Navigation, Pagination, Mousewheel, Keyboard} from 'swiper'
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -14,7 +15,10 @@ const SwiperType = memo(({ data, tags }) => {
   
   return (
     <Swiper className={styles.swiper}
-      pagination={{ clickable: true }}
+      cssMode={true}
+      mousewheel={true}
+      keyboard={true}
+      modules={[Navigation, Pagination, Mousewheel, Keyboard]}
       loop={false}>
       {
         data.map((type, i) => {

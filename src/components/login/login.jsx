@@ -29,6 +29,7 @@ const Login = ({ onOffSpiner }) => {
     const goToFreezer = ({ accessToken, email, photoURL, displayName, uid }) => { 
         const addhour = moment(new Date()).add(1, 'days');
         setCookies('atok', accessToken, { expires: addhour._d });
+        
         const exist = (data) => { 
             
             if (data.email !== email || data.photoURL !== photoURL || data.name !== displayName) { 

@@ -35,6 +35,9 @@
 .image_box img{
     width: 100%;
 }
+.tags{
+    color:rgb(249, 145, 7);
+}
 .more{
     text-align: center;
 }

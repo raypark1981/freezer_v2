@@ -72,9 +72,9 @@ const RecipeItem = memo(({ recipe }) => {
         </div>
         <h5>{DISP_RCP_NM}</h5>
         <div className={styles.tags}>
-          { RCP_WAY2 && <span>#{RCP_WAY2}</span>}
-          { RCP_PAT2 && <span>#{RCP_PAT2}</span>}
-          { HASH_TAG && <span>#{HASH_TAG}</span>}
+          { RCP_WAY2 && <span>#{RCP_WAY2} </span>}
+          { RCP_PAT2 && <span>#{RCP_PAT2} </span>}
+          { HASH_TAG && <span>#{HASH_TAG} </span>}
         </div>
       </li>
     )
