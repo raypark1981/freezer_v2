@@ -24,8 +24,8 @@ const MyEdit = ({ }) => {
 
     const signOut = useCallback(() => {
         authServiceContext.signOut().then((d) => {
-            console.log('sign out')
             clearSession();
+            window.location.replace('/');
         }).catch((error) => {
             console.log(error)
         })

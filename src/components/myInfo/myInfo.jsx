@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { memo, useContext, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
@@ -9,7 +9,7 @@ import { AuthServiceContext , DataServiceContext } from '../../App';
 import { getSession } from '../../services/session';
 import styles from './myInfo.module.css'
 
-const MyInfo = ({ toggle, count , initialCountBasketRecipeWarning}) => { 
+const MyInfo = memo(({ toggle, count , initialCountBasketRecipeWarning}) => { 
     const [user, setUser] = useState(null);
     const authServiceContext = useContext(AuthServiceContext);
     const dataServiceContext = useContext(DataServiceContext);
@@ -46,17 +46,17 @@ const MyInfo = ({ toggle, count , initialCountBasketRecipeWarning}) => {
 
     useEffect(() => { 
         if (!getSession('uid')) return;
-
-        authServiceContext.checkUserState((user) => { 
-            user && setUser({ email: user.email , photoURL : user.photoURL })
+        authServiceContext.checkUserState((_user) => { 
+             _user && setUser({ email: _user.email , photoURL : _user.photoURL })
         })
-
+        
         dataServiceContext.getFoods(getSession('uid')).then((snapshot) => {
             if (snapshot.exists()) {
-                const data = snapshot.val();
+                const data = snapshot.val(); 
                 initialCount(data);
             }
         });
+
     } , [])
 
     return (<section className={styles.section}>
@@ -106,22 +106,21 @@ const MyInfo = ({ toggle, count , initialCountBasketRecipeWarning}) => {
                 <button>추천레시피</button>
             </Link>
         </div>
-            <div className={`${styles.action} ${styles.my_notice} ${styles.line_top} ${styles.line_right}`}>
+        <div className={`${styles.action} ${styles.my_notice} ${styles.line_top} ${styles.line_right}`}>
             <Link to="/notice"  onClick={handleClick}>
                 <i></i>
                 <button>공지사항</button>
             </Link>
         </div>
-            <div className={`${styles.action} ${styles.my_ask} ${styles.line_top}`}>
-                <div>
-
-            <i></i>
-            <button>1:1문의</button>
-                </div>
+        <div className={`${styles.action} ${styles.my_ask} ${styles.line_top}`}>
+                <div onClick={() => { window.open('mailto:babopygam@nate.com') }}>
+                <i></i>
+                <button>1:1문의</button>
+            </div>
         </div>
     </div>}
 </section>)
-}
+})
 
 const mapStateToProp = (state) => { 
     return {

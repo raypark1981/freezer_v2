@@ -102,7 +102,13 @@ overflow: hidden;
     height:30px;
     margin:auto;
     margin-bottom: .5rem;
+    cursor: pointer;
 }
+
+.actions button{
+    cursor: pointer;
+}
+
 .my_edit i{
     background:no-repeat url('../../icon/lock.png');
     background-size:contain;

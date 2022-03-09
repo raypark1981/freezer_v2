@@ -32,11 +32,18 @@ const Login = ({ onOffSpiner }) => {
         
         const exist = (data) => { 
             
-            if (data.email !== email || data.photoURL !== photoURL || data.name !== displayName) { 
-                dataContext.setUserInfo(uid , {
-                    email: email
+            if (data.email !== email || data.photoURL !== photoURL || data.name !== displayName) {
+                dataContext.setUserInfo(uid, {
+                    ...data
+                    , email: email
                     , photoURL: photoURL
                     , name: displayName
+                    , lastLogin: moment(new Date()).format('yyyy-MM-DD hh:mm:ss')
+                })
+            } else { 
+                dataContext.setUserInfo(uid, {
+                    ...data,
+                    lastLogin: moment(new Date()).format('yyyy-MM-DD hh:mm:ss')
                 })
             }
             
@@ -50,6 +57,7 @@ const Login = ({ onOffSpiner }) => {
                 , email: email
                 , photoURL: photoURL
                 , name: displayName
+                , lastLogin: moment(new Date()).format('yyyy-MM-DD hh:mm:ss')
             })    
 
             const freezerKey = "fz" + Date.now();
